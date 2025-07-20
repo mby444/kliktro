@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -11,15 +12,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return Product::all();
     }
 
     /**
@@ -27,7 +20,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return Product::findOrFail($id);
     }
 
     /**
@@ -35,7 +28,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
     }
 
     /**
