@@ -5,7 +5,6 @@ import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import AdminPanel from "./pages/AdminPanel";
-import productsLoader from "./loaders/productsLoader";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +17,6 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        loader: productsLoader,
         Component: Products,
       },
       {

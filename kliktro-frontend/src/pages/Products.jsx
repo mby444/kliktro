@@ -1,22 +1,21 @@
-import { useLoaderData } from "react-router";
-import ProductCard from "../components/ProductCard";
+import { Suspense } from "react";
+import { Await } from "react-router";
+import Spinner from "../components/Spinner";
+import ErrorElement from "../components/ErrorElement";
+import API from "../api";
+import ProductsGridContainer from "../components/ProductsGridContainer";
 
 export default function Products() {
-  const { success, products } = useLoaderData();
-
-  if (!success) {
-    return <div>Failed to load products.</div>;
-  }
-
-  if (!products.length) {
-    return <div>No products yet.</div>;
-  }
+  const pendingResponse = API.get(`/products`);
+  const defaultErrorMessage = "Failed to load products.";
 
   return (
-    <div className="grid grid-cols-3 gap-4">
-      {products.map((product, i) => (
-        <ProductCard key={i} product={product} />
-      ))}
-    </div>
+    <Suspense fallback={<Spinner />}>
+      <Await
+        resolve={pendingResponse}
+        errorElement={<ErrorElement defaultMessage={defaultErrorMessage} />}
+        children={<ProductsGridContainer />}
+      />
+    </Suspense>
   );
 }
