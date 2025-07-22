@@ -10,15 +10,18 @@ export default function Cart() {
   }
 
   return (
-    <div>
-      {cart.items.map((item, i) => (
-        <CartItemCard
-          key={i}
-          item={item}
-          onUpdate={cart.updateItem}
-          onRemove={cart.removeItem}
-        />
-      ))}
-    </div>
+    <>
+      <div>
+        {cart.items.map((item, i) => (
+          <CartItemCard
+            key={i}
+            item={item}
+            onUpdate={cart.updateItem}
+            onRemove={cart.removeItem}
+          />
+        ))}
+      </div>
+      <div>Total: Rp {cart.totalPrice}</div>
+    </>
   );
 }

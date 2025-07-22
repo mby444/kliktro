@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
+import Login from "./pages/Login";
 import AdminPanel from "./pages/AdminPanel";
 
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
         Component: Cart,
       },
     ],
+  },
+  {
+    path: "/login",
+    Component: Login,
   },
   {
     path: "/admin",
