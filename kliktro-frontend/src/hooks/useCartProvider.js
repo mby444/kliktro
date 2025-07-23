@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { saveData, restoreData } from "../utils/localStorage";
 
+// This custom state belongs to /src/providers/CartProvider.jsx
 const useCartProvider = () => {
   const [items, setItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
