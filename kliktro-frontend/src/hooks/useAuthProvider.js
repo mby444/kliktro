@@ -11,23 +11,18 @@ const useAuthProvider = () => {
   const navigate = useNavigate();
 
   const storeToLocalStorage = () => {
-    console.log("store 1", user);
     if (!user) {
       return;
     }
-    console.log("store 2", user);
     saveData("user", user);
   };
 
   const restoreFromLocalStorage = () => {
     const restored = restoreData("user", null);
 
-    console.log("restored 1", restored);
-
     if (!restored) {
       return;
     }
-    console.log("restored 2", restored);
 
     setUser(restored);
   };

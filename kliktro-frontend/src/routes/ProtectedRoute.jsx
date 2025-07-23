@@ -13,30 +13,23 @@ export default function ProtectedRoute({ adminOnly = false }) {
     });
   };
 
-  const auth = useAuth();
-  const user = auth.user;
+  const { user, loaded } = useAuth();
 
-  if (!auth.loaded) {
-    console.log("Unloaded");
+  if (!loaded) {
     return;
   }
 
-  console.log(auth);
   if (!user) {
-    console.log("Not passed 1");
     return <Navigate to="/login" />;
-    // return <div>Hellooooooooooooooooooooooooooooooooooooooo</div>;
   }
 
   const savedUser = getUser(user);
 
   if (!savedUser) {
-    console.log("Not passed 2", savedUser, user);
     return <Navigate to="/login" />;
   }
 
   if (adminOnly && !savedUser.is_admin) {
-    console.log("Not passed 3");
     return <Navigate to="/login" />;
   }
 
