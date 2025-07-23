@@ -21,7 +21,7 @@ export default function Login() {
     return user;
   };
 
-  const action = async (prevState, formData) => {
+  const action = (prevState, formData) => {
     "use server";
 
     const email = formData.get("email").toLowerCase();

@@ -1,9 +1,8 @@
-import { useContext } from "react";
-import CartContext from "../context/CartContext";
+import useCart from "../hooks/useCart";
 import CartItemCard from "../components/CartItemCard";
 
 export default function Cart() {
-  const cart = useContext(CartContext);
+  const cart = useCart();
 
   if (cart.isEmpty()) {
     return <div>Cart is empty.</div>;

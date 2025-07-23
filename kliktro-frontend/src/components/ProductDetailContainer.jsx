@@ -1,10 +1,10 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useAsyncValue } from "react-router";
-import CartContext from "../context/CartContext";
+import useCart from "../hooks/useCart";
 
 export default function ProductDetailContainer() {
   const { data } = useAsyncValue();
-  const cart = useContext(CartContext);
+  const cart = useCart();
   const [qtyInput, setQtyInput] = useState(1);
 
   const handleQtyChange = (ev) => {
