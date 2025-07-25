@@ -2,7 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router";
 import SubmitButton from "./SubmitButton";
 
-export default function ProductForm({ data = {}, action = Function() }) {
+export default function ProductForm({
+  data = {},
+  action = Function(),
+  message = "",
+}) {
   const [input, setInput] = useState(data);
 
   const handleInputChange = (ev) => {
@@ -12,6 +16,8 @@ export default function ProductForm({ data = {}, action = Function() }) {
 
   return (
     <form action={action} className="max-w-sm mx-auto">
+      <div>{!!message && message}</div>
+      <input type="hidden" name="id" value={input.id} />
       <div className="mb-5">
         <label
           htmlFor="name"

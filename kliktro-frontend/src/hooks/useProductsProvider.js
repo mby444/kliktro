@@ -1,6 +1,7 @@
 import { useState, useEffect, useActionState } from "react";
 import { useNavigate, useParams } from "react-router";
 import API from "../api";
+import { validator, fixer } from "../utils/productForm";
 
 // This custom hook used by /src/providers/AsyncProductsProvider.jsx
 // TODO: data state should be renamed to products
@@ -50,26 +51,25 @@ const useProductsProvider = () => {
     try {
       setIsLoaded(false);
 
-      const { data: d, status } = await API.put(
+      const { data, status } = await API.put(
         `/products/${product.id}`,
         product
       );
 
-      if (status !== 200 || status !== 201) {
+      if (status !== 200) {
         throw new Error("Failed to update product.");
       }
 
-      const updatedData = getUpdatedProductList(product);
+      const newProductList = getUpdatedProductList(data);
 
-      // setData(data);
-      // setIsError(false);
-      // setErrorMessage("");
+      setData(newProductList);
+      setIsError(false);
+      setErrorMessage("");
     } catch (error) {
-      // setData(null);
-      // setIsError(true);
-      // setErrorMessage(error.toString());
+      setIsError(true);
+      setErrorMessage(error.toString());
     } finally {
-      // setIsLoaded(true);
+      setIsLoaded(true);
     }
   };
 
@@ -95,89 +95,31 @@ const useProductsProvider = () => {
   };
 
   const validateInput = (d) => {
-    // TODO: Move validator and fixer object into sparate file.
-    const validator = {
-      noEmptyField: () => {
-        const isAllFilled =
-          d.name.trim() &&
-          d.description.trim() &&
-          d.price.trim() &&
-          d.stock.trim() &&
-          d.image_url.trim() &&
-          d.categories.trim();
-
-        if (!isAllFilled) {
-          throw new Error("All fields are required.");
-        }
-      },
-      validPrice: () => {
-        const reg = /^\d+$/;
-        const isDigitOnly = reg.test(d.price);
-
-        if (!isDigitOnly) {
-          throw new Error("Price must be numeric.");
-        }
-
-        const isValidRange = parseInt(d.price) >= 1000;
-
-        if (!isValidRange) {
-          throw new Error("Price can't be less than Rp 1000.");
-        }
-      },
-      validStock: () => {
-        const reg = /^\d+$/;
-        const isDigitOnly = reg.test(d.stock);
-
-        if (!isDigitOnly) {
-          throw new Error("Stock must be numeric.");
-        }
-
-        const isValidRange = parseInt(d.stock) >= 0;
-
-        if (!isValidRange) {
-          throw new Error("Stock can't be less than 0.");
-        }
-      },
-    };
-
-    const fixer = {
-      fix: () => {
-        return {
-          ...d,
-          price: parseInt(d.price),
-          stock: parseInt(d.stock),
-        };
-      },
-    };
-
-    validator.noEmptyField();
-    validator.validPrice();
-    validator.validStock();
-    const validated = fixer.fix();
-
-    return validated;
+    validator.noEmptyField(d);
+    validator.validPrice(d);
+    validator.validStock(d);
+    return fixer.fix(d);
   };
 
   const actionEdit = async (prevState, formData) => {
     "use server";
 
     const inputData = {
+      id: formData.get("id"),
       name: formData.get("name"),
       description: formData.get("description"),
       price: formData.get("price"),
       stock: formData.get("stock"),
       image_url: formData.get("image_url"),
-      categories: formData.get("categories"),
+      category: formData.get("categories"),
     };
 
     try {
       const validated = validateInput(inputData);
-      console.log(validated);
-      const redirectPath = "/admin";
-
-      // navigate(redirectPath);
+      await updateProduct(validated);
+      navigate("/admin");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return error.toString();
     }
   };

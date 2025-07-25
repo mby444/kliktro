@@ -17,5 +17,11 @@ export default function EditProduct() {
     return <AsyncError message={response.errorMessage} />;
   }
 
-  return <ProductForm data={response.data} action={actionState.dispatchEdit} />;
+  return (
+    <ProductForm
+      data={response.data}
+      action={actionState.dispatchEdit}
+      message={actionState.messageEdit}
+    />
+  );
 }

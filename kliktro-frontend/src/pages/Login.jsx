@@ -10,7 +10,7 @@ export default function Login() {
         <div className="error-message">{actionState.message}</div>
       )}
       <form action={actionState.loginAction}>
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           name="email"
@@ -18,7 +18,7 @@ export default function Login() {
           autoComplete="off"
           required
         />
-        <label htmlFor="password">Password:</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           name="password"

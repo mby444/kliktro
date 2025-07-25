@@ -28,16 +28,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:1000',
-            'stock' => 'required|numeric|min:0',
-            'image_url' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
-        ]);
-
-        return Product::create($validatedData);
+        return Product::create($request->all());
     }
 
     /**
@@ -45,17 +36,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'price' => 'required|numeric|min:1000',
-            'stock' => 'required|numeric|min:0',
-            'image_url' => 'required|string|max:255',
-            'category' => 'required|string|max:255',
-        ]);
-
         $product = Product::findOrFail($id);
-        $product->update($validatedData);
+        $product->update($request->all());
 
         return $product;
     }
