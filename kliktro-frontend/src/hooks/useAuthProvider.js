@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { saveData, restoreData } from "../utils/localStorage";
 import users from "../dummies/users.json";
 
-// This custom state belongs to /src/providers/AuthProvider.jsx
+// This custom hook used by /src/providers/AuthProvider.jsx
 const useAuthProvider = () => {
   const [user, setUser] = useState(null);
   const [loaded, setLoaded] = useState(false);
