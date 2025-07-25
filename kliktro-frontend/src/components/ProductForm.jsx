@@ -19,6 +19,7 @@ export default function ProductForm({ data = {}, action = Function() }) {
           Product Name
         </label>
         <input
+          name="name"
           type="text"
           id="name"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -33,6 +34,7 @@ export default function ProductForm({ data = {}, action = Function() }) {
           Description
         </label>
         <textarea
+          name="description"
           id="description"
           rows="4"
           className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
@@ -47,6 +49,7 @@ export default function ProductForm({ data = {}, action = Function() }) {
           Price
         </label>
         <input
+          name="price"
           type="number"
           id="price"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -61,6 +64,7 @@ export default function ProductForm({ data = {}, action = Function() }) {
           Stock
         </label>
         <input
+          name="stock"
           type="number"
           id="stock"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -75,6 +79,7 @@ export default function ProductForm({ data = {}, action = Function() }) {
           Product Photo URL
         </label>
         <input
+          name="image_url"
           type="url"
           id="image_url"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -89,6 +94,7 @@ export default function ProductForm({ data = {}, action = Function() }) {
           Upload file
         </label>
         <input
+          name=""
           className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
           aria-describedby="product_photo_help"
           id="product_photo"
@@ -107,6 +113,7 @@ export default function ProductForm({ data = {}, action = Function() }) {
           Select product category
         </label>
         <select
+          name="categories"
           id="categories"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           defaultValue={input.category || ""}
