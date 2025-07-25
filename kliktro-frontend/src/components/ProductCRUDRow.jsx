@@ -1,9 +1,21 @@
-import { NavLink } from "react-router";
+import { useNavigate } from "react-router";
+import useProducts from "../hooks/useProducts";
 
 export default function ProductCRUDRow({ product }) {
-  const handleEdit = () => {};
+  const navigate = useNavigate();
+  const { removeProduct } = useProducts();
 
-  const handleRemove = () => {};
+  const handleEdit = () => {
+    navigate(`/admin/edit/${product.id}`);
+  };
+
+  const handleRemove = () => {
+    // TODO: Confirmation box should be using sweetalert2
+    if (!confirm("Are you sure?")) {
+      return;
+    }
+    removeProduct(product.id);
+  };
 
   return (
     <tr>

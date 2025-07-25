@@ -1,9 +1,6 @@
-import { useAsyncValue } from "react-router";
 import ProductCRUDRow from "./ProductCRUDRow";
 
-export default function ProductCRUDTable() {
-  const { data } = useAsyncValue();
-
+export default function ProductCRUDTable({ data }) {
   if (!data.length) {
     return <div>No products yet.</div>;
   }

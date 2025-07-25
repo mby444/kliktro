@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import AuthProvider from "./providers/AuthProvider";
 import CartProvider from "./providers/CartProvider";
+import AsyncProductsProvider from "./providers/AsyncProductsProvider";
 import AsyncProductProvider from "./providers/AsyncProductProvider";
 import MainLayout from "./layouts/MainLayout";
 import ProtectedRoute from "./routes/ProtectedRoute";
@@ -19,61 +20,66 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        Component: CartProvider,
+        Component: AsyncProductsProvider,
         children: [
           {
-            Component: MainLayout,
+            Component: CartProvider,
             children: [
               {
-                // Home page
-                index: true,
-                Component: Home,
-              },
-              {
-                // User login required
-                element: <ProtectedRoute adminOnly={false} />,
+                Component: MainLayout,
                 children: [
                   {
-                    path: "/products",
-                    Component: Products,
+                    // Home page
+                    index: true,
+                    Component: Home,
                   },
                   {
-                    path: "/products/:id",
-                    Component: ProductDetail,
-                  },
-                  {
-                    path: "/cart",
-                    Component: Cart,
+                    // User login required
+                    element: <ProtectedRoute adminOnly={false} />,
+                    children: [
+                      {
+                        path: "/products",
+                        Component: Products,
+                      },
+                      {
+                        path: "/products/:id",
+                        Component: ProductDetail,
+                      },
+                      {
+                        path: "/cart",
+                        Component: Cart,
+                      },
+                    ],
                   },
                 ],
               },
             ],
           },
-        ],
-      },
-      {
-        path: "/login",
-        Component: Login,
-      },
-      {
-        // Admin login required
-        element: <ProtectedRoute adminOnly={true} />,
-        children: [
           {
-            path: "/admin",
-            Component: AdminPanel,
+            path: "/login",
+            Component: Login,
           },
           {
-            path: "/admin/add",
-            Component: AddProduct,
-          },
-          {
-            path: "/admin/edit/:id",
-            Component: AsyncProductProvider,
+            // Admin login required
+            element: <ProtectedRoute adminOnly={true} />,
             children: [
               {
-                index: true,
-                Component: EditProduct,
+                path: "/admin",
+                Component: AdminPanel,
+              },
+              {
+                path: "/admin/add",
+                Component: AddProduct,
+              },
+              {
+                path: "/admin/edit/:id",
+                Component: AsyncProductProvider,
+                children: [
+                  {
+                    index: true,
+                    Component: EditProduct,
+                  },
+                ],
               },
             ],
           },

@@ -1,21 +1,18 @@
-import { Suspense } from "react";
-import { Await } from "react-router";
+import useProducts from "../hooks/useProducts";
 import Spinner from "../components/Spinner";
-import ErrorElement from "../components/ErrorElement";
-import API from "../api";
+import AsyncError from "../components/AsyncError";
 import ProductsGridContainer from "../components/ProductsGridContainer";
 
 export default function Products() {
-  const pendingResponse = API.get(`/products`);
-  const defaultErrorMessage = "Failed to load products.";
+  const response = useProducts();
 
-  return (
-    <Suspense fallback={<Spinner />}>
-      <Await
-        resolve={pendingResponse}
-        errorElement={<ErrorElement defaultMessage={defaultErrorMessage} />}
-        children={<ProductsGridContainer />}
-      />
-    </Suspense>
-  );
+  if (!response.isLoaded) {
+    return <Spinner />;
+  }
+
+  if (response.isError) {
+    return <AsyncError message={response.errorMessage} />;
+  }
+
+  return <ProductsGridContainer data={response.data} />;
 }

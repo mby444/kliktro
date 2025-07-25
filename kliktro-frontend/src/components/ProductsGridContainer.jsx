@@ -1,9 +1,7 @@
 import { useAsyncValue } from "react-router";
 import ProductCard from "./ProductCard";
 
-export default function ProductsGridContainer() {
-  const { data } = useAsyncValue();
-
+export default function ProductsGridContainer({ data }) {
   if (!data.length) {
     return <div>No products yet.</div>;
   }
