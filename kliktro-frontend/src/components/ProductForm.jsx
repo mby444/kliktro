@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import SubmitButton from "./SubmitButton";
+import { Button } from "./ui/button";
 
 export default function ProductForm({
   data = {},
@@ -137,10 +138,12 @@ export default function ProductForm({
           <option value="Drone">Drone</option>
         </select>
       </div>
-      <Link to="/admin" className="bg-gray-500 mx-4">
-        Back
-      </Link>
-      <SubmitButton />
+      <div className="flex gap-4">
+        <Button asChild={true} variant="outline" className="cursor-pointer">
+          <Link to="/admin">Back</Link>
+        </Button>
+        <SubmitButton />
+      </div>
     </form>
   );
 }

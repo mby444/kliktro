@@ -2,6 +2,7 @@ import useProducts from "../hooks/useProducts";
 import Spinner from "../components/Spinner";
 import AsyncError from "../components/AsyncError";
 import ProductCRUDTable from "../components/ProductCRUDTable";
+import { Button } from "@/components/ui/button";
 
 export default function AdminPanel() {
   const response = useProducts();
@@ -17,7 +18,7 @@ export default function AdminPanel() {
   return (
     <>
       <div>
-        <button>Add Product</button>
+        <Button className="cursor-pointer">Add Product</Button>
       </div>
       <ProductCRUDTable data={response.data} />
     </>

@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router";
 import useProducts from "../hooks/useProducts";
+import { TableCell, TableRow } from "@/components/ui/table";
+import { Button } from "./ui/button";
 
 export default function ProductCRUDRow({ product }) {
   const navigate = useNavigate();
@@ -18,16 +20,30 @@ export default function ProductCRUDRow({ product }) {
   };
 
   return (
-    <tr>
-      <td>{product.name}</td>
-      <td>{product.price}</td>
-      <td>{product.stock}</td>
-      <td>{product.category}</td>
-      <td>{product.updated_at}</td>
-      <td>
-        <button onClick={handleEdit}>Edit</button>
-        <button onClick={handleRemove}>Remove</button>
-      </td>
-    </tr>
+    <TableRow>
+      <TableCell>{product.name}</TableCell>
+      <TableCell>{product.price}</TableCell>
+      <TableCell>{product.stock}</TableCell>
+      <TableCell>{product.category}</TableCell>
+      <TableCell>{product.updated_at}</TableCell>
+      <TableCell>
+        <div className="flex gap-2">
+          <Button
+            onClick={handleEdit}
+            size="sm"
+            variant="secondary"
+            className="cursor-pointer">
+            Edit
+          </Button>
+          <Button
+            onClick={handleRemove}
+            size="sm"
+            variant="destructive"
+            className="cursor-pointer">
+            Remove
+          </Button>
+        </div>
+      </TableCell>
+    </TableRow>
   );
 }
