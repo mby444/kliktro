@@ -4,6 +4,7 @@ import API from "../api";
 
 // This custom hook used by /src/providers/AsyncProductProvider.jsx
 // TODO: Change "then" to "await"
+// TODO: Use existing products data to get data instead of using API
 const useProductProvider = () => {
   const [data, setData] = useState(null);
   const [isError, setIsError] = useState(false);

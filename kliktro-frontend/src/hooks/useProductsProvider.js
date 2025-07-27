@@ -47,6 +47,30 @@ const useProductsProvider = () => {
     }
   };
 
+  const addProduct = async (product) => {
+    try {
+      setIsLoaded(false);
+
+      const { data: newData, status } = await API.post(`/products`, product);
+
+      if (status !== 201) {
+        console.log(status);
+        throw new Error("Failed to add product.");
+      }
+
+      const newProductList = [...data, newData];
+
+      setData(newProductList);
+      setIsError(false);
+      setErrorMessage("");
+    } catch (error) {
+      setIsError(true);
+      setErrorMessage(error.toString());
+    } finally {
+      setIsLoaded(true);
+    }
+  };
+
   const updateProduct = async (product) => {
     try {
       setIsLoaded(false);
@@ -94,11 +118,36 @@ const useProductsProvider = () => {
     }
   };
 
-  const validateInput = (d) => {
+  const validateInput = (d, { hasId = false }) => {
+    if (hasId) {
+      validator.validId();
+    }
     validator.noEmptyField(d);
     validator.validPrice(d);
     validator.validStock(d);
     return fixer.fix(d);
+  };
+
+  const actionAdd = async (prevState, formData) => {
+    "use server";
+
+    const inputData = {
+      name: formData.get("name"),
+      description: formData.get("description"),
+      price: formData.get("price"),
+      stock: formData.get("stock"),
+      image_url: formData.get("image_url"),
+      category: formData.get("categories"),
+    };
+
+    try {
+      const validated = validateInput(inputData, { hasId: false });
+      await addProduct(validated);
+      navigate("/admin");
+    } catch (error) {
+      console.error(error);
+      return error.toString();
+    }
   };
 
   const actionEdit = async (prevState, formData) => {
@@ -115,7 +164,7 @@ const useProductsProvider = () => {
     };
 
     try {
-      const validated = validateInput(inputData);
+      const validated = validateInput(inputData, { hasId: true });
       await updateProduct(validated);
       navigate("/admin");
     } catch (error) {
@@ -124,6 +173,7 @@ const useProductsProvider = () => {
     }
   };
 
+  const [messageAdd, dispatchAdd] = useActionState(actionAdd, null);
   const [messageEdit, dispatchEdit] = useActionState(actionEdit, null);
 
   useEffect(() => {
@@ -135,7 +185,7 @@ const useProductsProvider = () => {
     isError,
     errorMessage,
     isLoaded,
-    actionState: { messageEdit, dispatchEdit },
+    actionState: { messageAdd, messageEdit, dispatchAdd, dispatchEdit },
     removeProduct,
   };
 };

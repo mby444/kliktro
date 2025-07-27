@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import useProducts from "../hooks/useProducts";
 import Spinner from "../components/Spinner";
 import AsyncError from "../components/AsyncError";
@@ -18,7 +19,9 @@ export default function AdminPanel() {
   return (
     <>
       <div>
-        <Button className="cursor-pointer">Add Product</Button>
+        <Button asChild={true} className="cursor-pointer">
+          <Link to="/admin/add">Add Product</Link>
+        </Button>
       </div>
       <ProductCRUDTable data={response.data} />
     </>

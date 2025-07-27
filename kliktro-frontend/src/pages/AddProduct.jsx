@@ -1,6 +1,12 @@
-import useProduct from "../hooks/useProduct";
+import useProducts from "../hooks/useProducts";
 import ProductForm from "../components/ProductForm";
 
 export default function AddProduct() {
-  return <ProductForm action="" />;
+  const { actionState } = useProducts();
+  return (
+    <ProductForm
+      action={actionState.dispatchAdd}
+      message={actionState.messageAdd}
+    />
+  );
 }
