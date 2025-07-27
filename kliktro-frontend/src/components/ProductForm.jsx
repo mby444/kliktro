@@ -79,6 +79,7 @@ export default function ProductForm({
           onChange={handleInputChange}
         />
       </div>
+      {/* TODO: Change URL field into file upload */}
       <div className="mb-5">
         <label
           htmlFor="image_url"

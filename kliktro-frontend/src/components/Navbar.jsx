@@ -1,41 +1,194 @@
-export default function Navbar() {
+import { useState } from "react";
+import { Link } from "react-router";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "@/components/ui/navigation-menu";
+import {
+  Shield,
+  LogIn,
+  LogOut,
+  Search,
+  ShoppingCart,
+  Menu as MenuIcon,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export default function Navbar({ isLogged = false, isAdmin = false }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const toggleMobile = () => setMobileOpen(!mobileOpen);
+
   return (
-    <header className="text-gray-600 body-font">
-      <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full"
-            viewBox="0 0 24 24">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
-          </svg>
-          <span className="ml-3 text-xl">Tailblocks</span>
-        </a>
-        <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5 hover:text-gray-900">First Link</a>
-          <a className="mr-5 hover:text-gray-900">Second Link</a>
-          <a className="mr-5 hover:text-gray-900">Third Link</a>
-          <a className="mr-5 hover:text-gray-900">Fourth Link</a>
-        </nav>
-        <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
-          Button
-          <svg
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            className="w-4 h-4 ml-1"
-            viewBox="0 0 24 24">
-            <path d="M5 12h14M12 5l7 7-7 7"></path>
-          </svg>
-        </button>
+    <header className="bg-white shadow-md px-4 py-3">
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        {/* Logo / Brand */}
+        <div className="text-xl font-bold text-primary">Kliktro</div>
+
+        {/* Desktop Menu */}
+        <NavigationMenu>
+          <NavigationMenuList className="hidden md:flex items-center gap-6">
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/"
+                  className="text-sm text-gray-700 hover:text-primary">
+                  Home
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/products"
+                  className="text-sm text-gray-700 hover:text-primary">
+                  Products
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/about"
+                  className="text-sm text-gray-700 hover:text-primary">
+                  About
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            {isAdmin && (
+              <NavigationMenuItem>
+                <Button
+                  asChild
+                  variant="secondary"
+                  className="bg-blue-100 text-blue-700 hover:bg-blue-200">
+                  <Link to="/admin" className="flex items-center gap-1 text-sm">
+                    <Shield className="w-4 h-4" />
+                    Admin
+                  </Link>
+                </Button>
+              </NavigationMenuItem>
+            )}
+
+            {isLogged ? (
+              <NavigationMenuItem>
+                <Button
+                  asChild
+                  variant="secondary"
+                  className="bg-red-100 text-red-700 hover:bg-red-200">
+                  <Link
+                    to="/logout"
+                    className="flex items-center gap-1 text-sm">
+                    <LogOut className="w-4 h-4" />
+                    Logout
+                  </Link>
+                </Button>
+              </NavigationMenuItem>
+            ) : (
+              <NavigationMenuItem>
+                <Button
+                  asChild
+                  variant="secondary"
+                  className="bg-green-100 text-green-700 hover:bg-green-200">
+                  <Link to="/login" className="flex items-center gap-1 text-sm">
+                    <LogIn className="w-4 h-4" />
+                    Login
+                  </Link>
+                </Button>
+              </NavigationMenuItem>
+            )}
+          </NavigationMenuList>
+        </NavigationMenu>
+
+        {/* Search */}
+        <div className="hidden md:flex items-center gap-2">
+          <div className="relative w-[200px]">
+            <span className="absolute inset-y-0 left-2 flex items-center text-gray-500">
+              <Search className="w-4 h-4" />
+            </span>
+            <Input placeholder="Search products..." className="pl-8" />
+          </div>
+        </div>
+
+        {/* Icons */}
+        <div className="flex items-center gap-4">
+          <a href="/cart" className="text-gray-700 hover:text-primary">
+            <ShoppingCart className="w-6 h-6" />
+          </a>
+
+          {/* Mobile menu toggle */}
+          <button onClick={toggleMobile} className="md:hidden">
+            <MenuIcon className="w-6 h-6" />
+          </button>
+        </div>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileOpen && (
+        <div className="md:hidden mt-3 px-4 space-y-3">
+          <a href="/" className="block text-gray-700 hover:text-primary">
+            Home
+          </a>
+          <a
+            href="/products"
+            className="block text-gray-700 hover:text-primary">
+            Products
+          </a>
+          <a href="/about" className="block text-gray-700 hover:text-primary">
+            About
+          </a>
+
+          {isAdmin && (
+            <Button
+              asChild
+              variant="secondary"
+              className="w-full bg-blue-100 text-blue-700 hover:bg-blue-200">
+              <Link
+                to="/admin"
+                className="flex items-center gap-1 text-sm justify-center">
+                <Shield className="w-4 h-4" />
+                Admin
+              </Link>
+            </Button>
+          )}
+
+          {isLogged ? (
+            <Button
+              asChild
+              variant="secondary"
+              className="w-full bg-red-100 text-red-700 hover:bg-red-200">
+              <Link
+                to="/logout"
+                className="flex items-center gap-1 text-sm justify-center">
+                <LogOut className="w-4 h-4" />
+                Logout
+              </Link>
+            </Button>
+          ) : (
+            <Button
+              asChild
+              variant="secondary"
+              className="w-full bg-green-100 text-green-700 hover:bg-green-200">
+              <Link
+                to="/login"
+                className="flex items-center gap-1 text-sm justify-center">
+                <LogIn className="w-4 h-4" />
+                Login
+              </Link>
+            </Button>
+          )}
+
+          <div className="flex items-center gap-2 mt-2">
+            <Input placeholder="Search..." className="flex-1" />
+            <Button variant="outline" size="sm">
+              <Search className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

@@ -120,7 +120,7 @@ const useProductsProvider = () => {
 
   const validateInput = (d, { hasId = false }) => {
     if (hasId) {
-      validator.validId();
+      validator.validId(d);
     }
     validator.noEmptyField(d);
     validator.validPrice(d);
