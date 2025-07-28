@@ -43,7 +43,7 @@ export default function BestSelling() {
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {products.map((product) => (
           <Link
-            to={`/product/${product.id}`}
+            to={`/products/${product.id}`}
             key={product.id}
             className="group block rounded-xl border shadow-sm hover:shadow-md transition duration-300 hover:-translate-y-1">
             <div className="overflow-hidden rounded-t-xl">

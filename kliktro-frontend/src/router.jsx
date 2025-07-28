@@ -43,7 +43,8 @@ const router = createBrowserRouter([
                       },
                       {
                         path: "/products/:id",
-                        Component: ProductDetail,
+                        Component: AsyncProductProvider,
+                        children: [{ index: true, Component: ProductDetail }],
                       },
                       {
                         path: "/cart",
@@ -74,12 +75,7 @@ const router = createBrowserRouter([
               {
                 path: "/admin/edit/:id",
                 Component: AsyncProductProvider,
-                children: [
-                  {
-                    index: true,
-                    Component: EditProduct,
-                  },
-                ],
+                children: [{ index: true, Component: EditProduct }],
               },
             ],
           },

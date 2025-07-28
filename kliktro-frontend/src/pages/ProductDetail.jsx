@@ -1,22 +1,19 @@
-import { Suspense } from "react";
-import { useParams, Await } from "react-router";
 import ProductDetailContainer from "../components/ProductDetailContainer";
-import Spinner from "../components/Spinner";
-import ErrorElement from "../components/ErrorElement";
-import API from "../api";
+import ProductDetailSkeleton from "@/components/ProductDetailSkeleton";
+import useProduct from "../hooks/useProduct";
+import AsyncError from "../components/AsyncError";
 
+// FIXME: Not Found Error has't been handled properly
 export default function ProductDetail() {
-  const { id } = useParams();
-  const pendingResponse = API.get(`/products/${id}`);
-  const defaultErrorMessage = "Failed to load product.";
+  const response = useProduct();
 
-  return (
-    <Suspense fallback={<Spinner />}>
-      <Await
-        resolve={pendingResponse}
-        errorElement={<ErrorElement defaultMessage={defaultErrorMessage} />}
-        children={<ProductDetailContainer />}
-      />
-    </Suspense>
-  );
+  if (!response.isLoaded) {
+    return <ProductDetailSkeleton />;
+  }
+
+  if (response.isError) {
+    return <AsyncError message={response.errorMessage} />;
+  }
+
+  return <ProductDetailContainer data={response.data} />;
 }
