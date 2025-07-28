@@ -12,15 +12,15 @@ const images = [
 export default function HeroCarousel() {
   return (
     <section className="relative h-[80vh] w-full overflow-hidden">
-      {/* Carousel background only */}
+      {/* Background Carousel */}
       <Swiper
         modules={[Autoplay, Pagination]}
         spaceBetween={0}
         slidesPerView={1}
-        loop={true}
+        loop
         autoplay={{ delay: 4000 }}
         pagination={{ clickable: true }}
-        className="h-full absolute inset-0 z-0">
+        className="absolute inset-0 z-0 h-full">
         {images.map((src, i) => (
           <SwiperSlide key={i}>
             <img
@@ -33,12 +33,12 @@ export default function HeroCarousel() {
         ))}
       </Swiper>
 
-      {/* Static overlay text */}
-      <div className="absolute top-0 z-10 h-full flex flex-col justify-center items-start px-8 text-white max-w-3xl">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow">
+      {/* Overlay Text Content */}
+      <div className="absolute inset-0 z-10 flex flex-col justify-center items-start px-6 md:px-12 text-white max-w-3xl">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-md">
           Discover the Best Electronics
         </h1>
-        <p className="text-lg drop-shadow mb-6">
+        <p className="text-lg md:text-xl mb-6 drop-shadow-md">
           Shop smart, fast, and secure with unbeatable daily deals tailored just
           for you.
         </p>

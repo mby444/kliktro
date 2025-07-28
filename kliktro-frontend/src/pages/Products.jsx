@@ -2,12 +2,13 @@ import useProducts from "../hooks/useProducts";
 import Spinner from "../components/Spinner";
 import AsyncError from "../components/AsyncError";
 import ProductsGridContainer from "../components/ProductsGridContainer";
+import ProductsSkeleton from "@/components/ProductsSkeleton";
 
 export default function Products() {
   const response = useProducts();
 
   if (!response.isLoaded) {
-    return <Spinner />;
+    return <ProductsSkeleton />;
   }
 
   if (response.isError) {

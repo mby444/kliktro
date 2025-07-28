@@ -4,7 +4,6 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import {
-  MonitorSmartphone,
   Tv,
   Headphones,
   Laptop,
@@ -32,11 +31,13 @@ const categories = [
 
 export default function CategorySlider() {
   return (
-    <section className="w-full my-8">
-      <h2 className="text-xl font-bold mb-6 px-4">Browse by Category</h2>
+    <section className="w-full py-12">
+      <h2 className="text-2xl md:text-3xl font-semibold px-4 md:px-8 lg:px-16 mb-6">
+        Browse by Category
+      </h2>
       <div className="relative flex items-center gap-4 w-full px-4">
         {/* Prev Button */}
-        <div className="swiper-button-prev-custom cursor-pointer p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
+        <div className="hidden md:flex left-0 z-10 swiper-button-prev-custom cursor-pointer p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
           <svg
             className="w-6 h-6"
             fill="none"
@@ -61,9 +62,10 @@ export default function CategorySlider() {
           }}
           className="w-full py-4"
           breakpoints={{
-            640: { slidesPerView: 3 },
-            768: { slidesPerView: 4 },
-            1024: { slidesPerView: 6 },
+            0: { slidesPerView: 2, spaceBetween: 12 },
+            480: { slidesPerView: 3, spaceBetween: 14 },
+            768: { slidesPerView: 4, spaceBetween: 16 },
+            1024: { slidesPerView: 6, spaceBetween: 16 },
           }}>
           {categories.map(({ icon: Icon, name }, i) => (
             <SwiperSlide key={i}>
@@ -76,7 +78,7 @@ export default function CategorySlider() {
         </Swiper>
 
         {/* Next Button */}
-        <div className="swiper-button-next-custom cursor-pointer p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
+        <div className="hidden md:flex right-0 z-10 swiper-button-next-custom cursor-pointer p-2 rounded-full bg-gray-200 hover:bg-gray-300 transition">
           <svg
             className="w-6 h-6"
             fill="none"

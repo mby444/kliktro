@@ -1,19 +1,24 @@
-import { NavLink } from "react-router";
+import { Link } from "react-router";
 
 export default function ProductCard({ product }) {
   return (
-    <NavLink to={`/products/${product.id}`}>
-      <div className="p-4 shadow rounded bg-white">
+    <Link
+      to={`/product/${product.id}`}
+      key={product.id}
+      className="group block rounded-xl border shadow-sm hover:shadow-md transition duration-300 hover:-translate-y-1">
+      <div className="overflow-hidden rounded-t-xl">
         <img
           src={product.image_url}
           alt={product.name}
-          className="h-40 object-cover w-full"
+          className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        <h2 className="text-lg font-bold mt-2">{product.name}</h2>
-        <p className="text-sm text-gray-600">
-          Rp {product.price.toLocaleString()}
-        </p>
       </div>
-    </NavLink>
+      <div className="p-4">
+        <h3 className="text-lg font-medium mb-2 group-hover:text-primary transition-colors">
+          {product.name}
+        </h3>
+        <p className="text-primary font-semibold">{product.price}</p>
+      </div>
+    </Link>
   );
 }
