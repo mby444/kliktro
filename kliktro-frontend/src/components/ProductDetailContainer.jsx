@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import Swal from "sweetalert2";
 import useCart from "../hooks/useCart";
-import { ShoppingCart, Plus, Minus, Home } from "lucide-react";
+import { ShoppingCart, Plus, Minus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Breadcrumb from "./Breadcrumb";
+import { formatRupiah } from "@/utils/stringFormatter";
 
 export default function ProductDetailContainer({ data }) {
   const cart = useCart();
@@ -22,7 +23,11 @@ export default function ProductDetailContainer({ data }) {
 
   const handleAddToCart = () => {
     if (data.stock <= 0) {
-      console.log("Can't add to cart, stock is empty.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops!",
+        text: "Stock is empty, cannot add to cart.",
+      });
       return;
     }
 
@@ -36,8 +41,14 @@ export default function ProductDetailContainer({ data }) {
     };
 
     cart.addItem(item);
-    // TODO: Change to sweetalert2 or something
-    alert("Added to cart successfuly!");
+
+    Swal.fire({
+      icon: "success",
+      title: "Added to Cart!",
+      text: `"${data.name}" has been added successfully.`,
+      timer: 1500,
+      showConfirmButton: false,
+    });
   };
 
   return (
@@ -63,7 +74,7 @@ export default function ProductDetailContainer({ data }) {
         <div className="w-full md:w-1/2 space-y-4">
           <h2 className="text-2xl font-bold text-gray-900">{data.name}</h2>
           <div className="text-lg text-gray-700">
-            Price: Rp {data.price.toLocaleString()}
+            Price: {formatRupiah(data.price)}
           </div>
           <div className="text-sm text-gray-500">
             Category:{" "}

@@ -1,16 +1,15 @@
 import useProducts from "../hooks/useProducts";
 import useProduct from "../hooks/useProduct";
 import ProductForm from "../components/ProductForm";
-import Spinner from "../components/Spinner";
 import AsyncError from "../components/AsyncError";
+import EditFormSkeleton from "@/components/EditFormSkeleton";
 
-// FIXME: Not Found Error has't been handled properly
 export default function EditProduct() {
   const { actionState } = useProducts();
   const response = useProduct();
 
   if (!response.isLoaded) {
-    return <Spinner />;
+    return <EditFormSkeleton />;
   }
 
   if (response.isError) {

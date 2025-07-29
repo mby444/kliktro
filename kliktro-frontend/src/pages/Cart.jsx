@@ -3,6 +3,7 @@ import CartItemCard from "../components/CartItemCard";
 import Breadcrumb from "@/components/Breadcrumb";
 import EmptyCart from "@/components/EmptyCart";
 import { Card, CardContent } from "@/components/ui/card";
+import { formatRupiah } from "@/utils/stringFormatter";
 
 export default function Cart() {
   const cart = useCart();
@@ -29,7 +30,7 @@ export default function Cart() {
             <CardContent className="text-right text-xl font-semibold">
               Total:{" "}
               <span className="text-primary">
-                Rp {cart.totalPrice.toLocaleString()}
+                {formatRupiah(cart.totalPrice)}
               </span>
             </CardContent>
           </Card>

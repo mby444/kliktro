@@ -3,7 +3,6 @@ import ProductDetailSkeleton from "@/components/ProductDetailSkeleton";
 import useProduct from "../hooks/useProduct";
 import AsyncError from "../components/AsyncError";
 
-// FIXME: Not Found Error has't been handled properly
 export default function ProductDetail() {
   const response = useProduct();
 

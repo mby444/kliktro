@@ -1,7 +1,3 @@
-// components/BestSelling.jsx
-import { Link } from "react-router";
-import { Button } from "@/components/ui/button";
-
 const products = [
   {
     id: 1,
@@ -36,14 +32,10 @@ export default function BestSelling() {
         <h2 className="text-2xl md:text-3xl font-semibold">
           Best Selling Products
         </h2>
-        {/* <Button className="bg-black text-white cursor-pointer hover:bg-gray-900 text-sm md:text-base">
-          View All
-        </Button> */}
       </div>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {products.map((product) => (
-          <Link
-            to={`/products/${product.id}`}
+          <div
             key={product.id}
             className="group block rounded-xl border shadow-sm hover:shadow-md transition duration-300 hover:-translate-y-1">
             <div className="overflow-hidden rounded-t-xl">
@@ -59,7 +51,7 @@ export default function BestSelling() {
               </h3>
               <p className="text-primary font-semibold">{product.price}</p>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </section>

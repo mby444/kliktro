@@ -1,0 +1,2 @@
+- TODO: Buat loader skeleton untuk form edit produk
+- TODO: Menubar mobile masih terlihat jelek, buat menjadi lebih modern

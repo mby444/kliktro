@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Pencil, Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
+import { formatRupiah } from "@/utils/stringFormatter";
 
 export default function ProductCRUDRow({ product }) {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function ProductCRUDRow({ product }) {
   return (
     <TableRow>
       <TableCell>{product.name}</TableCell>
-      <TableCell>Rp {product.price.toLocaleString()}</TableCell>
+      <TableCell>{formatRupiah(product.price)}</TableCell>
       <TableCell>{product.stock}</TableCell>
       <TableCell>{product.category}</TableCell>
       <TableCell>{formattedDate}</TableCell>

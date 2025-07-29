@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { formatRupiah } from "@/utils/stringFormatter";
 import { useState } from "react";
 
 export default function CartItemCard({
@@ -8,18 +8,6 @@ export default function CartItemCard({
   onRemove = Function(),
 }) {
   const [qtyInput, setQtyInput] = useState(item.qty);
-
-  const handleUpdateQty = () => {
-    onUpdate({ ...item, qty: qtyInput });
-  };
-
-  const handleQtyInputChange = (ev) => {
-    let value = parseInt(ev.target.value);
-    if (isNaN(value)) value = 1;
-    if (value < 1) value = 1;
-    if (value > item.stock) value = item.stock;
-    setQtyInput(value);
-  };
 
   const increaseQty = () => {
     if (qtyInput < item.stock) {
@@ -48,9 +36,7 @@ export default function CartItemCard({
       />
       <div className="flex flex-col gap-2 flex-grow">
         <div className="font-semibold">{item.name}</div>
-        <div className="text-sm text-gray-600">
-          Rp {item.price.toLocaleString()}
-        </div>
+        <div className="text-sm text-gray-600">{formatRupiah(item.price)}</div>
         <div className="flex items-center gap-2">
           <Button
             onClick={decreaseQty}
@@ -71,9 +57,6 @@ export default function CartItemCard({
           </Button>
         </div>
         <div className="flex gap-2 mt-2">
-          {/* <Button onClick={handleUpdateQty} variant="secondary">
-            Update
-          </Button> */}
           <Button onClick={handleRemoveQty} variant="destructive">
             Remove
           </Button>
