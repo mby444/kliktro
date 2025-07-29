@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router";
 
-export default function Searchbar({ isMobile = false }) {
+export default function Searchbar({ isMobile = false, onSearch = Function() }) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [input, setInput] = useState("");
@@ -15,6 +15,7 @@ export default function Searchbar({ isMobile = false }) {
       return;
     }
 
+    onSearch();
     navigate(`/products?search=${value}`);
   };
 
@@ -45,6 +46,13 @@ export default function Searchbar({ isMobile = false }) {
     search(ev.target.value);
   };
 
+  const handleSearchClickMobile = () => {
+    if (!inputMobile.trim()) {
+      return;
+    }
+    search(inputMobile);
+  };
+
   return isMobile ? (
     // Mobile component
     <div className="flex items-center gap-2 mt-2">
@@ -55,7 +63,7 @@ export default function Searchbar({ isMobile = false }) {
         placeholder="Search..."
         className="flex-1"
       />
-      <Button variant="outline" size="sm">
+      <Button variant="outline" size="sm" onClick={handleSearchClickMobile}>
         <Search className="w-4 h-4" />
       </Button>
     </div>

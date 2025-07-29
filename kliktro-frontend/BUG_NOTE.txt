@@ -3,11 +3,11 @@ FIXME: Halaman Cart
 Deskripsi: Saat menambahkan 2 barang ke cart, pertama memasukkan barang A dengan qty 1, lalu barang B dengan qty 2. Ketika barang A dihapus, qty barang B berubah menjadi sama dengan nilai qty barang A yang telah dihapus.
 Masalah:
 Solusi:
-Selesai:
+Selesai: false
 
 2.
-FIXME: Halaman Products
+FIXED: Halaman Products
 Deskripsi: Saat menekan tombol kategori dan tidak ada produk pada kategori tersebut, semua tombol kategori malah hilang
-Masalah:
-Solusi:
-Selesai:
+Masalah: Sepele
+Solusi: Mengganti if statement pengecek error menjadi ternary yang langsung ditaruh di elemen JSX
+Selesai: true

@@ -24,6 +24,7 @@ export default function Navbar({ isLogged = false, isAdmin = false }) {
   const { logout } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const toggleMobile = () => setMobileOpen(!mobileOpen);
+  const closeMobile = () => setMobileOpen(false);
 
   return (
     <header className="bg-white shadow-md px-4 py-3">
@@ -106,7 +107,7 @@ export default function Navbar({ isLogged = false, isAdmin = false }) {
         </NavigationMenu>
 
         {/* Search */}
-        <Searchbar />
+        <Searchbar onSearch={closeMobile} />
         {/* Icons */}
         <div className="flex items-center gap-4">
           <Link to="/cart" className="text-gray-700 hover:text-primary">
@@ -123,15 +124,22 @@ export default function Navbar({ isLogged = false, isAdmin = false }) {
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden mt-3 px-4 space-y-3">
-          <Link to="/" className="block text-gray-700 hover:text-primary">
+          <Link
+            to="/"
+            onClick={closeMobile}
+            className="block text-gray-700 hover:text-primary">
             Home
           </Link>
           <Link
             to="/products"
+            onClick={closeMobile}
             className="block text-gray-700 hover:text-primary">
             Products
           </Link>
-          <Link to="/about" className="block text-gray-700 hover:text-primary">
+          <Link
+            to="/about"
+            onClick={closeMobile}
+            className="block text-gray-700 hover:text-primary">
             About
           </Link>
 
@@ -142,6 +150,7 @@ export default function Navbar({ isLogged = false, isAdmin = false }) {
               className="w-full bg-blue-100 text-blue-700 hover:bg-blue-200">
               <Link
                 to="/admin"
+                onClick={closeMobile}
                 className="flex items-center gap-1 text-sm justify-center">
                 <Shield className="w-4 h-4" />
                 Admin
@@ -156,6 +165,7 @@ export default function Navbar({ isLogged = false, isAdmin = false }) {
               className="w-full bg-red-100 text-red-700 hover:bg-red-200">
               <Link
                 to="/logout"
+                onClick={closeMobile}
                 className="flex items-center gap-1 text-sm justify-center">
                 <LogOut className="w-4 h-4" />
                 Logout
@@ -168,13 +178,14 @@ export default function Navbar({ isLogged = false, isAdmin = false }) {
               className="w-full bg-green-100 text-green-700 hover:bg-green-200">
               <Link
                 to="/login"
+                onClick={closeMobile}
                 className="flex items-center gap-1 text-sm justify-center">
                 <LogIn className="w-4 h-4" />
                 Login
               </Link>
             </Button>
           )}
-          <Searchbar isMobile={true} />
+          <Searchbar isMobile={true} onSearch={closeMobile} />
         </div>
       )}
     </header>
