@@ -12,3 +12,10 @@ export const restoreData = (key, defaultValue = null) => {
 
   return JSON.parse(restored);
 };
+
+export const removeData = (key) => {
+  if (!key) {
+    return;
+  }
+  window.localStorage.removeItem(key);
+};

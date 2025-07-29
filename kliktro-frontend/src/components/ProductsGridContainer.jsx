@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router";
 import {
   Headphones,
   Tv,
@@ -37,27 +37,55 @@ const categories = [
 ];
 
 const ProductsGridContainer = ({ data: products }) => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const filteredProducts =
-    selectedCategory === "All"
+    selectedCategory.toLowerCase() === "all"
       ? products
-      : products.filter((product) => product.category === selectedCategory);
+      : products.filter(
+          (product) =>
+            product.category.toLowerCase() === selectedCategory.toLowerCase()
+        );
 
-  if (!filteredProducts.length) {
-    return <EmptyProduct />;
-  }
+  const doesCategoryExist = (category) => {
+    return categories
+      .map((c) => c.name.toLowerCase())
+      .includes(category.toLowerCase());
+  };
+
+  const syncCategoryTab = () => {
+    const category = searchParams.get("category") || "all";
+    if (!doesCategoryExist(category)) {
+      setSelectedCategory("all");
+      return;
+    }
+    setSelectedCategory(category);
+  };
+
+  const changeCategory = (category) => {
+    setSearchParams((prev) => {
+      prev.delete("category");
+      prev.append("category", category);
+      return prev;
+    });
+  };
+
+  useEffect(() => {
+    syncCategoryTab();
+  }, [searchParams.toString()]);
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap gap-3 mb-6">
         {categories.map((category) => {
           const Icon = category.icon;
-          const isActive = selectedCategory === category.name;
+          const isActive =
+            selectedCategory.toLowerCase() === category.name.toLowerCase();
           return (
             <button
               key={category.name}
-              onClick={() => setSelectedCategory(category.name)}
+              onClick={() => changeCategory(category.name.toLowerCase())}
               className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm transition cursor-pointer ${
                 isActive
                   ? "bg-black text-white"
@@ -69,32 +97,36 @@ const ProductsGridContainer = ({ data: products }) => {
           );
         })}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
-            <img
-              src={product.image_url}
-              alt={product.name}
-              className="w-full h-48 object-cover transition duration-300"
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-black">
-                {product.name}
-              </h3>
-              <p className="text-gray-700 font-medium mt-2">
-                {formatRupiah(product.price)}
-              </p>
-              <Link to={`/products/${product.id}`}>
-                <button className="mt-4 bg-black text-white px-4 py-2 rounded cursor-pointer hover:bg-gray-900 transition text-sm">
-                  View Details
-                </button>
-              </Link>
+      {filteredProducts.length ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredProducts.map((product) => (
+            <div
+              key={product.id}
+              className="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+              <img
+                src={product.image_url}
+                alt={product.name}
+                className="w-full h-48 object-cover transition duration-300"
+              />
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-black">
+                  {product.name}
+                </h3>
+                <p className="text-gray-700 font-medium mt-2">
+                  {formatRupiah(product.price)}
+                </p>
+                <Link to={`/products/${product.id}`}>
+                  <button className="mt-4 bg-black text-white px-4 py-2 rounded cursor-pointer hover:bg-gray-900 transition text-sm">
+                    View Details
+                  </button>
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <EmptyProduct />
+      )}
     </div>
   );
 };

@@ -2,6 +2,24 @@ import { useState } from "react";
 import { Link } from "react-router";
 import SubmitButton from "./SubmitButton";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
+import { Label } from "./ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "./ui/card";
 
 export default function ProductForm({
   data = {},
@@ -15,136 +33,142 @@ export default function ProductForm({
     setInput({ ...input, [key]: value });
   };
 
+  const handleCategoryChange = (value) => {
+    setInput({ ...input, category: value });
+  };
+
   return (
-    <form action={action} className="max-w-sm mx-auto">
-      <div>{!!message && message}</div>
-      <input type="hidden" name="id" value={input.id} />
-      <div className="mb-5">
-        <label
-          htmlFor="name"
-          className="block mb-2 text-sm font-medium text-gray-900">
-          Product Name
-        </label>
-        <input
-          name="name"
-          type="text"
-          id="name"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          value={input.name || ""}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div className="mb-5">
-        <label
-          htmlFor="description"
-          className="block mb-2 text-sm font-medium text-gray-900">
-          Description
-        </label>
-        <textarea
-          name="description"
-          id="description"
-          rows="4"
-          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-          placeholder="Description..."
-          value={input.description || ""}
-          onChange={handleInputChange}></textarea>
-      </div>
-      <div className="mb-5">
-        <label
-          htmlFor="price"
-          className="block mb-2 text-sm font-medium text-gray-900">
-          Price
-        </label>
-        <input
-          name="price"
-          type="number"
-          id="price"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          value={input.price || ""}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div className="mb-5">
-        <label
-          htmlFor="stock"
-          className="block mb-2 text-sm font-medium text-gray-900">
-          Stock
-        </label>
-        <input
-          name="stock"
-          type="number"
-          id="stock"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          value={input.stock || ""}
-          onChange={handleInputChange}
-        />
-      </div>
-      {/* TODO: Change URL field into file upload */}
-      <div className="mb-5">
-        <label
-          htmlFor="image_url"
-          className="block mb-2 text-sm font-medium text-gray-900">
-          Product Photo URL
-        </label>
-        <input
-          name="image_url"
-          type="url"
-          id="image_url"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          value={input.image_url || ""}
-          onChange={handleInputChange}
-        />
-      </div>
-      {/* <div className="mb-5">
-        <label
-          className="block mb-2 text-sm font-medium text-gray-900"
-          htmlFor="product_photo">
-          Upload file
-        </label>
-        <input
-          name=""
-          className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
-          aria-describedby="product_photo_help"
-          id="product_photo"
-          type="file"
-        />
-        <div
-          className="mt-1 text-sm text-gray-500 dark:text-gray-300"
-          id="product_photo_help">
-          A photo of your product
-        </div>
-      </div> */}
-      <div className="mb-5">
-        <label
-          htmlFor="categories"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-          Select product category
-        </label>
-        <select
-          name="categories"
-          id="categories"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          defaultValue={input.category || ""}
-          onChange={handleInputChange}>
-          <option value="">-- Select --</option>
-          <option value="Audio">Audio</option>
-          <option value="Television">Television</option>
-          <option value="Computers">Computers</option>
-          <option value="Smartphone">Smartphone</option>
-          <option value="Camera">Camera</option>
-          <option value="Computer Accessories">Computer Accessories</option>
-          <option value="Wearable">Wearable</option>
-          <option value="Tablet">Tablet</option>
-          <option value="Accessories">Accessories</option>
-          <option value="Drone">Drone</option>
-        </select>
-      </div>
-      <div className="flex gap-4">
-        <Button asChild={true} variant="outline" className="cursor-pointer">
-          <Link to="/admin">Back</Link>
-        </Button>
-        <SubmitButton />
-      </div>
-    </form>
+    <Card className="max-w-3xl mx-auto mt-12 border border-muted shadow-xl bg-white">
+      <CardHeader className="text-center">
+        <CardTitle className="text-2xl font-semibold">
+          {input.id ? "Edit Product" : "Add New Product"}
+        </CardTitle>
+        <CardDescription>
+          Fill out the product details below to save changes.
+        </CardDescription>
+      </CardHeader>
+
+      <form action={action}>
+        <CardContent className="space-y-6">
+          {!!message && (
+            <div className="text-sm text-red-600 bg-red-100 border border-red-300 px-3 py-2 rounded">
+              {message}
+            </div>
+          )}
+
+          <Input type="hidden" name="id" value={input.id} />
+
+          <div className="space-y-2">
+            <Label htmlFor="name" className="text-sm font-medium">
+              Product Name
+            </Label>
+            <Input
+              id="name"
+              name="name"
+              placeholder="E.g., Sony WH-1000XM5"
+              value={input.name || ""}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="description" className="text-sm font-medium">
+              Description
+            </Label>
+            <Textarea
+              id="description"
+              name="description"
+              rows="4"
+              placeholder="Write a short product description..."
+              value={input.description || ""}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <Label htmlFor="price" className="text-sm font-medium">
+                Price (IDR)
+              </Label>
+              <Input
+                id="price"
+                name="price"
+                type="number"
+                placeholder="e.g., 1599000"
+                value={input.price || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="stock" className="text-sm font-medium">
+                Stock
+              </Label>
+              <Input
+                id="stock"
+                name="stock"
+                type="number"
+                placeholder="e.g., 24"
+                value={input.stock || ""}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="image_url" className="text-sm font-medium">
+              Product Image URL
+            </Label>
+            <Input
+              id="image_url"
+              name="image_url"
+              type="url"
+              placeholder="https://example.com/product.jpg"
+              value={input.image_url || ""}
+              onChange={handleInputChange}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="category" className="text-sm font-medium">
+              Select Category
+            </Label>
+            <Select
+              name="category"
+              value={input.category || ""}
+              onValueChange={handleCategoryChange}>
+              <SelectTrigger>
+                <SelectValue placeholder="-- Select Category --" />
+              </SelectTrigger>
+              <SelectContent>
+                {[
+                  "Audio",
+                  "Television",
+                  "Computers",
+                  "Smartphone",
+                  "Camera",
+                  "Computer Accessories",
+                  "Wearable",
+                  "Tablet",
+                  "Accessories",
+                  "Drone",
+                ].map((cat) => (
+                  <SelectItem key={cat} value={cat}>
+                    {cat}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+
+        <CardFooter className="flex justify-between px-6 py-4 border-t mt-4">
+          <Button asChild variant="outline">
+            <Link to="/admin">Back</Link>
+          </Button>
+          <SubmitButton />
+        </CardFooter>
+      </form>
+    </Card>
   );
 }

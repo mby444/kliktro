@@ -1,6 +1,6 @@
 import { useState, useEffect, useActionState } from "react";
 import { useNavigate } from "react-router";
-import { saveData, restoreData } from "../utils/localStorage";
+import { saveData, restoreData, removeData } from "../utils/localStorage";
 import users from "../dummies/users.json";
 
 // This custom hook used by /src/providers/AuthProvider.jsx
@@ -25,6 +25,10 @@ const useAuthProvider = () => {
     }
 
     setUser(restored);
+  };
+
+  const removeFromLocalStorage = () => {
+    removeData("user");
   };
 
   const getAndValidateUser = (email, password) => {
@@ -59,6 +63,11 @@ const useAuthProvider = () => {
 
   const [message, loginAction] = useActionState(action, null);
 
+  const logout = () => {
+    removeFromLocalStorage();
+    window.location.reload();
+  };
+
   useEffect(() => {
     restoreFromLocalStorage();
     setLoaded(true);
@@ -68,7 +77,7 @@ const useAuthProvider = () => {
     storeToLocalStorage();
   }, [user]);
 
-  return { user, loaded, actionState: { message, loginAction } };
+  return { user, loaded, actionState: { message, loginAction }, logout };
 };
 
 export default useAuthProvider;

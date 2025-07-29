@@ -1,3 +1,4 @@
+// ProductCRUDTable.jsx
 import ProductCRUDRow from "./ProductCRUDRow";
 import {
   Table,
@@ -15,7 +16,6 @@ export default function ProductCRUDTable({ data }) {
 
   return (
     <Table>
-      {/* <TableCaption>A list of products.</TableCaption> */}
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>

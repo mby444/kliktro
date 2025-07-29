@@ -61,7 +61,7 @@ const useCartProvider = () => {
 
   const calculateTotalPrice = () => {
     const result = items
-      .map((item) => item.price)
+      .map((item) => item.price * item.qty)
       .reduce((prev, curr) => prev + curr, 0);
 
     setTotalPrice(result);

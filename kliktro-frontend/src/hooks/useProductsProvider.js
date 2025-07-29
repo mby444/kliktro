@@ -137,7 +137,7 @@ const useProductsProvider = () => {
       price: formData.get("price"),
       stock: formData.get("stock"),
       image_url: formData.get("image_url"),
-      category: formData.get("categories"),
+      category: formData.get("category"),
     };
 
     try {
@@ -160,7 +160,7 @@ const useProductsProvider = () => {
       price: formData.get("price"),
       stock: formData.get("stock"),
       image_url: formData.get("image_url"),
-      category: formData.get("categories"),
+      category: formData.get("category"),
     };
 
     try {

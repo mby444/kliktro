@@ -1,3 +1,15 @@
-export default function AsyncError({ message = "Error." }) {
-  return <div>{message}</div>;
+// AsyncError.jsx
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertTriangleIcon } from "lucide-react";
+
+export default function AsyncError({ message = "Something went wrong." }) {
+  return (
+    <div className="max-w-xl mx-auto mt-10">
+      <Alert variant="destructive">
+        <AlertTriangleIcon className="h-5 w-5" />
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>{message}</AlertDescription>
+      </Alert>
+    </div>
+  );
 }
