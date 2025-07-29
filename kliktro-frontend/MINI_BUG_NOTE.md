@@ -1,0 +1,1 @@
+- Menubar mobile tidak tertutup setelah link dipencet atau setelah melakukan pencarian

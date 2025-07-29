@@ -1,5 +1,3 @@
-import { Link } from "react-router";
-import { Home } from "lucide-react";
 import useProducts from "../hooks/useProducts";
 import Breadcrumb from "@/components/Breadcrumb";
 import AsyncError from "../components/AsyncError";

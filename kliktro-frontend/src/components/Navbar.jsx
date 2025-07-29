@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import useAuth from "@/hooks/useAuth";
+import Searchbar from "./Searchbar";
 
 export default function Navbar({ isLogged = false, isAdmin = false }) {
   const { logout } = useAuth();
@@ -105,15 +106,7 @@ export default function Navbar({ isLogged = false, isAdmin = false }) {
         </NavigationMenu>
 
         {/* Search */}
-        <div className="hidden md:flex items-center gap-2">
-          <div className="relative w-[200px]">
-            <span className="absolute inset-y-0 left-2 flex items-center text-gray-500">
-              <Search className="w-4 h-4" />
-            </span>
-            <Input placeholder="Search products..." className="pl-8" />
-          </div>
-        </div>
-
+        <Searchbar />
         {/* Icons */}
         <div className="flex items-center gap-4">
           <Link to="/cart" className="text-gray-700 hover:text-primary">
@@ -181,13 +174,7 @@ export default function Navbar({ isLogged = false, isAdmin = false }) {
               </Link>
             </Button>
           )}
-
-          <div className="flex items-center gap-2 mt-2">
-            <Input placeholder="Search..." className="flex-1" />
-            <Button variant="outline" size="sm">
-              <Search className="w-4 h-4" />
-            </Button>
-          </div>
+          <Searchbar isMobile={true} />
         </div>
       )}
     </header>
