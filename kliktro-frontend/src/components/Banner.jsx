@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router";
 
 export default function Banner() {
   return (
@@ -25,9 +26,9 @@ export default function Banner() {
           Find the latest gadgets and best deals, all in one place.
         </p>
         <Button asChild size="lg" className="gap-2 text-base font-semibold">
-          <a href="/products">
+          <Link to="/products">
             Browse Products <ArrowRight size={18} />
-          </a>
+          </Link>
         </Button>
       </div>
     </section>

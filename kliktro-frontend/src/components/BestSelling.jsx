@@ -36,9 +36,9 @@ export default function BestSelling() {
         <h2 className="text-2xl md:text-3xl font-semibold">
           Best Selling Products
         </h2>
-        <Button className="bg-black text-white cursor-pointer hover:bg-gray-900 text-sm md:text-base">
+        {/* <Button className="bg-black text-white cursor-pointer hover:bg-gray-900 text-sm md:text-base">
           View All
-        </Button>
+        </Button> */}
       </div>
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {products.map((product) => (

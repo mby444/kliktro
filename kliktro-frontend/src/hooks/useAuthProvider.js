@@ -65,7 +65,7 @@ const useAuthProvider = () => {
 
   const logout = () => {
     removeFromLocalStorage();
-    window.location.reload();
+    window.location.href = "/";
   };
 
   useEffect(() => {

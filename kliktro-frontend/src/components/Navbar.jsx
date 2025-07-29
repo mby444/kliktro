@@ -116,9 +116,9 @@ export default function Navbar({ isLogged = false, isAdmin = false }) {
 
         {/* Icons */}
         <div className="flex items-center gap-4">
-          <a href="/cart" className="text-gray-700 hover:text-primary">
+          <Link to="/cart" className="text-gray-700 hover:text-primary">
             <ShoppingCart className="w-6 h-6" />
-          </a>
+          </Link>
 
           {/* Mobile menu toggle */}
           <button onClick={toggleMobile} className="md:hidden">
@@ -130,17 +130,17 @@ export default function Navbar({ isLogged = false, isAdmin = false }) {
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden mt-3 px-4 space-y-3">
-          <a href="/" className="block text-gray-700 hover:text-primary">
+          <Link to="/" className="block text-gray-700 hover:text-primary">
             Home
-          </a>
-          <a
-            href="/products"
+          </Link>
+          <Link
+            to="/products"
             className="block text-gray-700 hover:text-primary">
             Products
-          </a>
-          <a href="/about" className="block text-gray-700 hover:text-primary">
+          </Link>
+          <Link to="/about" className="block text-gray-700 hover:text-primary">
             About
-          </a>
+          </Link>
 
           {isAdmin && (
             <Button

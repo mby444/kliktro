@@ -13,6 +13,8 @@ import Login from "./pages/Login";
 import AdminPanel from "./pages/AdminPanel";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import About from "./pages/About";
+import ErrorNotFound from "./pages/ErrorNotFound";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,10 @@ const router = createBrowserRouter([
                     // Home page
                     index: true,
                     Component: Home,
+                  },
+                  {
+                    path: "/about",
+                    Component: About,
                   },
                   {
                     // User login required
@@ -82,6 +88,10 @@ const router = createBrowserRouter([
         ],
       },
     ],
+  },
+  {
+    path: "/*",
+    Component: ErrorNotFound,
   },
 ]);
 

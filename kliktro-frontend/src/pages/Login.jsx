@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 
 export default function Login() {
   const { actionState } = useAuth();
@@ -43,7 +45,14 @@ export default function Login() {
                 required
               />
             </div>
-            <SubmitButton />
+            <div className="flex justify-between gap-2 pt-2">
+              <Button asChild variant="outline" className="w-1/2">
+                <Link to="/">Cancel</Link>
+              </Button>
+              <div className="w-1/2">
+                <SubmitButton className="w-full" />
+              </div>
+            </div>
           </form>
         </CardContent>
       </Card>

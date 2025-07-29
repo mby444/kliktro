@@ -2,6 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import { Link } from "react-router";
 
 const images = [
   "https://picsum.photos/id/1015/1200/600",
@@ -42,11 +43,11 @@ export default function HeroCarousel() {
           Shop smart, fast, and secure with unbeatable daily deals tailored just
           for you.
         </p>
-        <a
-          href="/products"
+        <Link
+          to="/products"
           className="px-6 py-3 bg-white text-black font-semibold rounded-full shadow hover:bg-gray-200 transition">
           Shop Now
-        </a>
+        </Link>
       </div>
     </section>
   );

@@ -15,19 +15,64 @@ import {
   PackageSearch,
   Plane,
 } from "lucide-react";
+import { Link } from "react-router";
 
 const categories = [
-  { icon: Headphones, name: "Audio" },
-  { icon: Tv, name: "Television" },
-  { icon: Laptop, name: "Computers" },
-  { icon: Smartphone, name: "Smartphone" },
-  { icon: Camera, name: "Camera" },
-  { icon: Mouse, name: "Computer Accessories" },
-  { icon: Watch, name: "Wearable" },
-  { icon: TabletSmartphone, name: "Tablet" },
-  { icon: PackageSearch, name: "Accessories" },
-  { icon: Plane, name: "Drone" },
+  {
+    icon: Headphones,
+    name: "Audio",
+    path: "/products?category=audio",
+  },
+  {
+    icon: Tv,
+    name: "Television",
+    path: "/products?category=television",
+  },
+  {
+    icon: Laptop,
+    name: "Computers",
+    path: "/products?category=computers",
+  },
+  {
+    icon: Smartphone,
+    name: "Smartphone",
+    path: "/products?category=smartphone",
+  },
+  {
+    icon: Camera,
+    name: "Camera",
+    path: "/products?category=camera",
+  },
+  {
+    icon: Mouse,
+    name: "Computer Accessories",
+    path: "/products?category=computer+accessories",
+  },
+  {
+    icon: Watch,
+    name: "Wearable",
+    path: "/products?category=wearable",
+  },
+  {
+    icon: TabletSmartphone,
+    name: "Tablet",
+    path: "/products?category=tablet",
+  },
+  {
+    icon: PackageSearch,
+    name: "Accessories",
+    path: "/products?category=accessories",
+  },
+  {
+    icon: Plane,
+    name: "Drone",
+    path: "/products?category=drone",
+  },
 ];
+
+const formatSearchValue = (searchValue = "") => {
+  return searchValue.split(" ").join("+");
+};
 
 export default function CategorySlider() {
   return (
@@ -67,12 +112,14 @@ export default function CategorySlider() {
             768: { slidesPerView: 4, spaceBetween: 16 },
             1024: { slidesPerView: 6, spaceBetween: 16 },
           }}>
-          {categories.map(({ icon: Icon, name }, i) => (
+          {categories.map(({ icon: Icon, name, path }, i) => (
             <SwiperSlide key={i}>
-              <div className="flex flex-col items-center justify-center p-4 border rounded-xl cursor-pointer hover:shadow-lg hover:scale-105 transition-transform">
+              <Link
+                to={`/products?category=${formatSearchValue(name)}`}
+                className="flex flex-col items-center justify-center p-4 border rounded-xl cursor-pointer hover:shadow-lg hover:scale-105 transition-transform">
                 <Icon className="h-8 w-8 mb-2" />
                 <p className="text-sm text-center">{name}</p>
-              </div>
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>
