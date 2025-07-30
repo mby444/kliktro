@@ -10,17 +10,12 @@ import heroMobileBg1 from "@/assets/hero/hero_mobile_1.png";
 import heroMobileBg2 from "@/assets/hero/hero_mobile_2.png";
 import heroMobileBg3 from "@/assets/hero/hero_mobile_3.png";
 
-// const images = [
-//   "https://picsum.photos/id/1015/1200/600",
-//   "https://picsum.photos/id/1020/1200/600",
-//   "https://picsum.photos/id/1024/1200/600",
-// ];
 const images = [heroBg1, heroBg2, heroBg3];
 const imagesMobile = [heroMobileBg1, heroMobileBg2, heroMobileBg3];
 
 export default function HeroCarousel() {
   return (
-    <section className="relative h-[50rem] w-full overflow-hidden bg-black md:h-[100vh]">
+    <section className="relative h-[50rem] w-full overflow-hidden bg-black md:h-[40rem]">
       {/* Overlay Text Content */}
       <div className="relative md:absolute h-1/2 md:h-full inset-0 z-10 flex flex-col justify-center items-start px-6 md:px-12 text-white max-w-3xl">
         <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-md">

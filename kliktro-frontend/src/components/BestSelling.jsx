@@ -49,7 +49,7 @@ export default function BestSelling() {
               <h3 className="text-lg font-medium mb-2 group-hover:text-primary transition-colors">
                 {product.name}
               </h3>
-              <p className="text-primary font-semibold">{product.price}</p>
+              {/* <p className="text-primary font-semibold">{product.price}</p> */}
             </div>
           </div>
         ))}

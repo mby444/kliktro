@@ -20,7 +20,7 @@ class ProductSeeder extends Seeder
                 'price' => 350000,
                 'description' => 'A lightweight on-ear headphone delivering powerful bass, comfort for long listening sessions, and easy portability wherever you go.',
                 'stock' => 10,
-                'image_url' => 'https://picsum.photos/seed/headphone/600/400',
+                'image_url' => "http://localhost:8000/storage/images/products/JBL Tune 500 Headphone.jpg",
                 'category' => 'Audio'
             ],
             [
@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
                 'price' => 500000,
                 'description' => 'A compact speaker with deep bass, crystal-clear sound, and up to 24 hours of wireless playback for music anywhere.',
                 'stock' => 15,
-                'image_url' => 'https://picsum.photos/seed/speaker/600/400',
+                'image_url' => "http://localhost:8000/storage/images/products/Anker Soundcore Bluetooth Speaker.jpg",
                 'category' => 'Audio'
             ],
             [
@@ -36,7 +36,7 @@ class ProductSeeder extends Seeder
                 'price' => 850000,
                 'description' => 'Truly wireless earbuds with powerful sound, long battery life, and a comfortable fit for daily use.',
                 'stock' => 7,
-                'image_url' => 'https://picsum.photos/seed/earbuds/600/400',
+                'image_url' => "http://localhost:8000/storage/images/products/Sony WF-C500 Wireless Earbuds.jpg",
                 'category' => 'Audio'
             ],
 
@@ -46,7 +46,7 @@ class ProductSeeder extends Seeder
                 'price' => 4500000,
                 'description' => 'A sleek 43-inch television with stunning 4K clarity, integrated smart features, and immersive audio for your living room entertainment.',
                 'stock' => 5,
-                'image_url' => 'https://picsum.photos/seed/tv/600/400',
+                'image_url' => "http://localhost:8000/storage/images/products/Samsung 43 4K UHD Smart TV.jpg",
                 'category' => 'Television'
             ],
             [
@@ -54,7 +54,7 @@ class ProductSeeder extends Seeder
                 'price' => 7200000,
                 'description' => '50-inch Smart TV with NanoCell display for vibrant colors and smart voice controls via AI ThinQ.',
                 'stock' => 4,
-                'image_url' => 'https://picsum.photos/seed/nanotv/600/400',
+                'image_url' => "http://localhost:8000/storage/images/products/LG 50 NanoCell 4K Smart TV.jpg",
                 'category' => 'Television'
             ],
             [

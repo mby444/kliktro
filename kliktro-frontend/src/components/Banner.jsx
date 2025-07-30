@@ -1,26 +1,26 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
+import banner from "@/assets/banner/main_banner.png";
 
 export default function Banner() {
   return (
     <section className="relative w-full h-[70vh]">
-      {/* Gambar Background */}
+      {/* Background Image */}
       <img
-        src="https://picsum.photos/1920/1080?grayscale"
+        // src="https://picsum.photos/1920/1080?grayscale"
+        src={banner}
         alt="Banner Background"
         className="absolute inset-0 w-full h-full object-cover"
       />
 
-      {/* Overlay gelap */}
+      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/60 z-10" />
 
-      {/* Konten */}
+      {/* Content */}
       <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-6 text-white">
         <h2 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
-          Upgrade Your Tech Game
+          Upgrade Your Tech
         </h2>
         <p className="text-lg md:text-xl mb-6 max-w-2xl drop-shadow">
           Find the latest gadgets and best deals, all in one place.
