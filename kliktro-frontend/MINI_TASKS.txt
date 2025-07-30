@@ -1,3 +1,0 @@
-- Buat loader skeleton untuk form edit produk (ok)
-- TODO: Menubar mobile masih terlihat jelek, buat menjadi lebih modern
-- TODO: Buat pesan error custom saat gagal mengambil data produk dari backend
