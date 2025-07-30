@@ -17,9 +17,9 @@ export default function Cart() {
       ) : (
         <>
           <div className="space-y-4 md:space-x-4 md:grid md:grid-cols-2">
-            {cart.items.map((item, i) => (
+            {cart.items.map((item) => (
               <CartItemCard
-                key={i}
+                key={item.id}
                 item={item}
                 onUpdate={cart.updateItem}
                 onRemove={cart.removeItem}

@@ -1,9 +1,9 @@
 1.
-FIXME: Halaman Cart
+FIXED: Halaman Cart
 Deskripsi: Saat menambahkan 2 barang ke cart, pertama memasukkan barang A dengan qty 1, lalu barang B dengan qty 2. Ketika barang A dihapus, qty barang B berubah menjadi sama dengan nilai qty barang A yang telah dihapus.
-Masalah:
-Solusi:
-Selesai: false
+Masalah: nilai props key salah
+Solusi: Mengubah key={i} menjadi key={item.id}
+Selesai: true
 
 2.
 FIXED: Halaman Products
@@ -11,3 +11,7 @@ Deskripsi: Saat menekan tombol kategori dan tidak ada produk pada kategori terse
 Masalah: Sepele
 Solusi: Mengganti if statement pengecek error menjadi ternary yang langsung ditaruh di elemen JSX
 Selesai: true
+
+3.
+Suspek: Semua list yang menggunakan key={i} (memasukkan index loop ke dalam props key)
+Ditemukan false
