@@ -20,7 +20,7 @@ class ProductSeeder extends Seeder
                 'price' => 350000,
                 'description' => 'A lightweight on-ear headphone delivering powerful bass, comfort for long listening sessions, and easy portability wherever you go.',
                 'stock' => 10,
-                'image_url' => "http://localhost:8000/storage/images/products/JBL Tune 500 Headphone.jpg",
+                'image_url' => 'http://localhost:8000/storage/images/products/JBL Tune 500 Headphone.jpg',
                 'category' => 'Audio'
             ],
             [
@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
                 'price' => 500000,
                 'description' => 'A compact speaker with deep bass, crystal-clear sound, and up to 24 hours of wireless playback for music anywhere.',
                 'stock' => 15,
-                'image_url' => "http://localhost:8000/storage/images/products/Anker Soundcore Bluetooth Speaker.jpg",
+                'image_url' => 'http://localhost:8000/storage/images/products/Anker Soundcore Bluetooth Speaker.jpg',
                 'category' => 'Audio'
             ],
             [
@@ -36,29 +36,29 @@ class ProductSeeder extends Seeder
                 'price' => 850000,
                 'description' => 'Truly wireless earbuds with powerful sound, long battery life, and a comfortable fit for daily use.',
                 'stock' => 7,
-                'image_url' => "http://localhost:8000/storage/images/products/Sony WF-C500 Wireless Earbuds.jpg",
+                'image_url' => 'http://localhost:8000/storage/images/products/Sony WF-C500 Wireless Earbuds.jpg',
                 'category' => 'Audio'
             ],
 
             // --- Television (3) ---
             [
-                'name' => 'Samsung 43" 4K UHD Smart TV',
+                'name' => 'Samsung 43 4K UHD Smart TV',
                 'price' => 4500000,
                 'description' => 'A sleek 43-inch television with stunning 4K clarity, integrated smart features, and immersive audio for your living room entertainment.',
                 'stock' => 5,
-                'image_url' => "http://localhost:8000/storage/images/products/Samsung 43 4K UHD Smart TV.jpg",
+                'image_url' => 'http://localhost:8000/storage/images/products/Samsung 43 4K UHD Smart TV.jpg',
                 'category' => 'Television'
             ],
             [
-                'name' => 'LG 50" NanoCell 4K Smart TV',
+                'name' => 'LG 50 NanoCell 4K Smart TV',
                 'price' => 7200000,
                 'description' => '50-inch Smart TV with NanoCell display for vibrant colors and smart voice controls via AI ThinQ.',
                 'stock' => 4,
-                'image_url' => "http://localhost:8000/storage/images/products/LG 50 NanoCell 4K Smart TV.jpg",
+                'image_url' => 'http://localhost:8000/storage/images/products/LG 50 NanoCell 4K Smart TV.jpg',
                 'category' => 'Television'
             ],
             [
-                'name' => 'Xiaomi Mi TV P1 32"',
+                'name' => 'Xiaomi Mi TV P1 32',
                 'price' => 2300000,
                 'description' => 'Affordable Android TV with Google Assistant, Dolby Audio, and a bezel-less design.',
                 'stock' => 6,
@@ -216,7 +216,7 @@ class ProductSeeder extends Seeder
             [
                 'name' => 'Realme Pad Mini',
                 'price' => 2100000,
-                'description' => 'Compact tablet with an 8.7" display, large battery, and dual speakers for content consumption.',
+                'description' => 'Compact tablet with an 8.7 display, large battery, and dual speakers for content consumption.',
                 'stock' => 8,
                 'image_url' => 'https://picsum.photos/seed/realmetab/600/400',
                 'category' => 'Tablet'
@@ -282,6 +282,11 @@ class ProductSeeder extends Seeder
                 'category' => 'Drone'
             ],
         ];
+
+        foreach ($products as &$product) {
+            $product['image_url'] = 'http://localhost:8000/storage/images/products/' . str_replace(' ', '_', $product['name']) . '.jpg';
+        }
+        unset($product);
 
         Product::truncate();
 
