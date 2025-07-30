@@ -51,10 +51,11 @@ const useProductsProvider = () => {
     try {
       setIsLoaded(false);
 
-      const { data: newData, status } = await API.post(`/products`, product);
+      const { data: newData, status } = await API.post(`/products`, product, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       if (status !== 201) {
-        console.log(status);
         throw new Error("Failed to add product.");
       }
 
@@ -74,10 +75,14 @@ const useProductsProvider = () => {
   const updateProduct = async (product) => {
     try {
       setIsLoaded(false);
+      console.log("product", product);
 
       const { data, status } = await API.put(
         `/products/${product.id}`,
-        product
+        product,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
 
       if (status !== 200) {
@@ -90,6 +95,7 @@ const useProductsProvider = () => {
       setIsError(false);
       setErrorMessage("");
     } catch (error) {
+      console.log(error);
       setIsError(true);
       setErrorMessage(error.toString());
     } finally {
@@ -125,6 +131,7 @@ const useProductsProvider = () => {
     validator.noEmptyField(d);
     validator.validPrice(d);
     validator.validStock(d);
+    validator.validImage(d);
     return fixer.fix(d);
   };
 
@@ -136,7 +143,7 @@ const useProductsProvider = () => {
       description: formData.get("description"),
       price: formData.get("price"),
       stock: formData.get("stock"),
-      image_url: formData.get("image_url"),
+      image: formData.get("image"),
       category: formData.get("category"),
     };
 
@@ -159,7 +166,7 @@ const useProductsProvider = () => {
       description: formData.get("description"),
       price: formData.get("price"),
       stock: formData.get("stock"),
-      image_url: formData.get("image_url"),
+      image: formData.get("image"),
       category: formData.get("category"),
     };
 

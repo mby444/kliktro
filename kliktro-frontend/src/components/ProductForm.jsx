@@ -20,6 +20,7 @@ import {
   CardTitle,
   CardDescription,
 } from "./ui/card";
+import Swal from "sweetalert2";
 
 export default function ProductForm({
   data = {},
@@ -31,6 +32,31 @@ export default function ProductForm({
   const handleInputChange = (ev) => {
     const { id: key, value } = ev.target;
     setInput({ ...input, [key]: value });
+  };
+
+  const handleFileInputChange = (ev) => {
+    console.log("ev.target.files", ev.target.files);
+    // Output:
+    // FileList {0: File, length: 1}0: FilelastModified: 1753869740261lastModifiedDate: Wed Jul 30 2025 17:02:20 GMT+0700 (Indochina Time) {}name: "WhatsApp Image 2025-07-30 at 17.01.54_41172970.jpg"size: 195084type: "image/jpeg"webkitRelativePath: ""[[Prototype]]: Filelength: 1[[Prototype]]: FileList
+
+    // setInput({ ...input, image: ev.target.files[0] });
+    const file = ev.target.files[0];
+
+    if (!file) return;
+
+    // MIME type validation
+    if (!file.type.startsWith("image/")) {
+      Swal.fire("Error!", "File must be an image!", "error");
+      return;
+    }
+
+    // Max size: 2 MB
+    if (file.size > 2 * 1024 * 1024) {
+      Swal.fire("Error!", "File is too large, maximum size is 2 MB!", "error");
+      return;
+    }
+
+    setInput({ ...input, image: file });
   };
 
   const handleCategoryChange = (value) => {
@@ -48,7 +74,7 @@ export default function ProductForm({
         </CardDescription>
       </CardHeader>
 
-      <form action={action}>
+      <form action={action} encType="multipart/form-data">
         <CardContent className="space-y-6">
           {!!message && (
             <div className="text-sm text-red-600 bg-red-100 border border-red-300 px-3 py-2 rounded">
@@ -115,7 +141,7 @@ export default function ProductForm({
             </div>
           </div>
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <Label htmlFor="image_url" className="text-sm font-medium">
               Product Image URL
             </Label>
@@ -126,6 +152,20 @@ export default function ProductForm({
               placeholder="https://example.com/product.jpg"
               value={input.image_url || ""}
               onChange={handleInputChange}
+            />
+          </div> */}
+          <div className="space-y-2">
+            <Label htmlFor="image" className="text-sm font-medium">
+              Upload Product Image
+            </Label>
+            <Input
+              id="image"
+              name="image"
+              type="file"
+              accept="image/*"
+              onChange={handleFileInputChange}
+              onClick={(ev) => console.log(!!ev.target.files[0])} // outputs true or false
+              required={!input.id}
             />
           </div>
 

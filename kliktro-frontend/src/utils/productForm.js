@@ -13,7 +13,7 @@ export const validator = {
       d.description.trim() &&
       d.price.trim() &&
       d.stock.trim() &&
-      d.image_url.trim() &&
+      !!d.image &&
       d.category.trim();
 
     if (!isAllFilled) {
@@ -46,6 +46,19 @@ export const validator = {
 
     if (!isValidRange) {
       throw new Error("Stock can't be less than 0.");
+    }
+  },
+  validImage: (d) => {
+    if (!d) throw new Error("Product image is required.");
+
+    // MIME type validation
+    if (!d.image.type.startsWith("image/")) {
+      throw new Error("File must be an image.");
+    }
+
+    // Max size: 2 MB
+    if (d.size > 2 * 1024 * 1024) {
+      throw new Error("File is too large, maximum size is 2 MB.");
     }
   },
 };

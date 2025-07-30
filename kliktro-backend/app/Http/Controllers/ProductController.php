@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -28,7 +30,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        return Product::create($request->all());
+        $image      = $request->file('image');
+        $fileName   = Str::uuid() . '.' . $image->getClientOriginalExtension();
+        $path       = $image->storeAs('images/products', $fileName, "public");
+        $product = [
+            "name"=> $request->input("name"),
+            "description"=> $request->input("description"),
+            "price"=> $request->input("price"),
+            "stock"=> $request->input("stock"),
+            "image_url"=> $request->schemeAndHttpHost() . Storage::url($path),
+            "category"=> $request->input("category"),
+        ];
+
+        return Product::create($product);
     }
 
     /**
@@ -36,8 +50,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $image      = $request->file('image');
+        $fileName   = Str::uuid() . '.' . $image->getClientOriginalExtension();
+        $path       = $image->storeAs('images/products', $fileName, "public");
+
         $product = Product::findOrFail($id);
-        $product->update($request->all());
+        $oldRelativePath = str_replace(asset("storage"), "public/", $product->image_url);
+
+        Storage::delete($oldRelativePath);
+        $product->update([
+            "name"=> $request->input("name"),
+            "description"=> $request->input("description"),
+            "price"=> $request->input("price"),
+            "stock"=> $request->input("stock"),
+            "image_url"=> $request->schemeAndHttpHost() . Storage::url($path),
+            "category"=> $request->input("category"),
+        ]);
 
         return $product;
     }
@@ -47,7 +75,12 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
+        $product = Product::findOrFail($id);
+        $relativePath = str_replace(asset('storage') . '/', '', $product->image_url);
+        // Storage::delete($relativePath);
+        Storage::disk('public')->delete($relativePath);
         $deleted = Product::destroy($id);
+
         return response()->json(['deleted' => $deleted > 0]);
     }
 }
