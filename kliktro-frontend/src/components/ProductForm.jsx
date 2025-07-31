@@ -26,8 +26,6 @@ export default function ProductForm({ state, action = Function() }) {
   const data = state.inputData;
   const [input, setInput] = useState(data);
 
-  console.log("data", data);
-
   const handleInputChange = (ev) => {
     const { id: key, value } = ev.target;
     setInput({ ...input, [key]: value });

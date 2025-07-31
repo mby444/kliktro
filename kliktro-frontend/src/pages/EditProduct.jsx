@@ -16,12 +16,11 @@ export default function EditProduct() {
     return <AsyncError message={response.errorMessage} />;
   }
 
-  return (
-    <ProductForm
-      // data={response.data}
-      // message={stateEdit.message}
-      state={stateEdit}
-      action={dispatchEdit}
-    />
-  );
+  if (stateEdit.success) {
+    window.location.href = "/admin";
+  }
+
+  const prefilledState = { ...stateEdit, inputData: response.data }; // Fill form fields with existing data
+
+  return <ProductForm state={prefilledState} action={dispatchEdit} />;
 }

@@ -50,22 +50,27 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $image      = $request->file('image');
-        $fileName   = Str::uuid() . '.' . $image->getClientOriginalExtension();
-        $path       = $image->storeAs('images/products', $fileName, "public");
-
         $product = Product::findOrFail($id);
-        $oldRelativePath = str_replace(asset("storage") . "/", "", $product->image_url);
-
-        Storage::disk("public")->delete($oldRelativePath);
-        $product->update([
+        $attributes = [
             "name"=> $request->input("name"),
             "description"=> $request->input("description"),
             "price"=> $request->input("price"),
             "stock"=> $request->input("stock"),
-            "image_url"=> $request->schemeAndHttpHost() . Storage::url($path),
             "category"=> $request->input("category"),
-        ]);
+        ];
+
+        if ($request->hasFile("image")) {
+            $image = $request->file('image');
+            $fileName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+            $path = $image->storeAs('images/products', $fileName, "public");
+    
+            $oldRelativePath = str_replace(asset("storage") . "/", "", $product->image_url);
+    
+            Storage::disk("public")->delete($oldRelativePath);
+            $attributes["image_url"] = $request->schemeAndHttpHost() . Storage::url($path);
+        }
+
+        $product->update($attributes);
 
         return $product;
     }

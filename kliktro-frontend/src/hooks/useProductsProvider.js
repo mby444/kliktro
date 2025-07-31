@@ -4,10 +4,10 @@ import API from "../api";
 import { validator, fixer } from "../utils/productForm";
 
 // This custom hook used by /src/providers/AsyncProductsProvider.jsx
-// TODO: data state should be renamed to products
 const useProductsProvider = () => {
+  const params = useParams();
   const navigate = useNavigate();
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
@@ -134,11 +134,13 @@ const useProductsProvider = () => {
   const validateInput = (d, { hasId = false }) => {
     if (hasId) {
       validator.validId(d);
+    } else {
+      validator.validImage(d);
     }
+
     validator.noEmptyField(d);
     validator.validPrice(d);
     validator.validStock(d);
-    validator.validImage(d);
     return fixer.fix(d);
   };
 
@@ -157,7 +159,6 @@ const useProductsProvider = () => {
     try {
       const validated = validateInput(inputData, { hasId: false });
       await addProduct(validated);
-      // navigate("/admin");
       return {
         isInitial: false,
         success: true,
@@ -191,7 +192,6 @@ const useProductsProvider = () => {
     try {
       const validated = validateInput(inputData, { hasId: true });
       await updateProduct(validated);
-      // navigate("/admin");
       return {
         isInitial: false,
         success: true,
