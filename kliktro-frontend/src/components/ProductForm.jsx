@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router";
 import SubmitButton from "./SubmitButton";
 import { Button } from "./ui/button";
@@ -20,11 +20,16 @@ import {
   CardTitle,
   CardDescription,
 } from "./ui/card";
+import { X } from "lucide-react";
 import Swal from "sweetalert2";
 
 export default function ProductForm({ state, action = Function() }) {
   const data = state.inputData;
   const [input, setInput] = useState(data);
+  const [preview, setPreview] = useState(
+    input.image ? URL.createObjectURL(input.image) : null
+  );
+  const fileInputRef = useRef();
 
   const handleInputChange = (ev) => {
     const { id: key, value } = ev.target;
@@ -33,17 +38,14 @@ export default function ProductForm({ state, action = Function() }) {
 
   const handleFileInputChange = (ev) => {
     const file = ev.target.files[0];
-
     if (!file) return;
 
-    // MIME type validation
     if (!file.type.startsWith("image/")) {
       Swal.fire("Error!", "File must be an image!", "error");
       ev.target.value = "";
       return;
     }
 
-    // Max size: 2 MB
     if (file.size > 2 * 1024 * 1024) {
       Swal.fire("Error!", "File is too large, maximum size is 2 MB!", "error");
       ev.target.value = "";
@@ -51,19 +53,28 @@ export default function ProductForm({ state, action = Function() }) {
     }
 
     setInput({ ...input, image: file });
+    setPreview(URL.createObjectURL(file));
   };
 
   const handleCategoryChange = (value) => {
     setInput({ ...input, category: value });
   };
 
+  const handleRemoveImage = () => {
+    setInput({ ...input, image: null });
+    setPreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   return (
     <Card className="max-w-3xl mx-auto mt-12 border border-muted shadow-xl bg-white">
-      <CardHeader className="text-center">
-        <CardTitle className="text-2xl font-semibold">
+      <CardHeader className="text-center space-y-1">
+        <CardTitle className="text-3xl font-bold tracking-tight">
           {input.id ? "Edit Product" : "Add New Product"}
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-sm text-gray-500">
           Fill out the product details below to save changes.
         </CardDescription>
       </CardHeader>
@@ -79,9 +90,7 @@ export default function ProductForm({ state, action = Function() }) {
           <Input type="hidden" name="id" value={input.id} />
 
           <div className="space-y-2">
-            <Label htmlFor="name" className="text-sm font-medium">
-              Product Name
-            </Label>
+            <Label htmlFor="name">Product Name</Label>
             <Input
               id="name"
               name="name"
@@ -93,9 +102,7 @@ export default function ProductForm({ state, action = Function() }) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-sm font-medium">
-              Description
-            </Label>
+            <Label htmlFor="description">Description</Label>
             <Textarea
               id="description"
               name="description"
@@ -108,9 +115,7 @@ export default function ProductForm({ state, action = Function() }) {
 
           <div className="grid grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="price" className="text-sm font-medium">
-                Price (IDR)
-              </Label>
+              <Label htmlFor="price">Price (IDR)</Label>
               <Input
                 id="price"
                 name="price"
@@ -121,9 +126,7 @@ export default function ProductForm({ state, action = Function() }) {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="stock" className="text-sm font-medium">
-                Stock
-              </Label>
+              <Label htmlFor="stock">Stock</Label>
               <Input
                 id="stock"
                 name="stock"
@@ -135,38 +138,43 @@ export default function ProductForm({ state, action = Function() }) {
             </div>
           </div>
 
-          {/* <div className="space-y-2">
-            <Label htmlFor="image_url" className="text-sm font-medium">
-              Product Image URL
-            </Label>
-            <Input
-              id="image_url"
-              name="image_url"
-              type="url"
-              placeholder="https://example.com/product.jpg"
-              value={input.image_url || ""}
-              onChange={handleInputChange}
-            />
-          </div> */}
           <div className="space-y-2">
-            <Label htmlFor="image" className="text-sm font-medium">
-              Upload Product Image
+            <Label htmlFor="image">
+              Product Image {input.id && "(optional)"}
             </Label>
-            <Input
-              id="image"
-              name="image"
-              type="file"
-              accept="image/*"
-              onChange={handleFileInputChange}
-              //onClick={(ev) => console.log(!!ev.target.files[0])} // outputs true or false
-              required={!input.id}
-            />
+
+            <div className="flex items-start gap-4">
+              <Input
+                id="image"
+                name="image"
+                type="file"
+                accept="image/*"
+                onChange={handleFileInputChange}
+                required={!input.id}
+                ref={fileInputRef}
+                className="w-full"
+              />
+
+              {preview && (
+                <div className="relative w-24 h-24 rounded overflow-hidden border">
+                  <img
+                    src={preview}
+                    alt="Preview"
+                    className="object-cover w-full h-full"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleRemoveImage}
+                    className="absolute top-1 right-1 bg-white text-red-600 hover:text-red-800 rounded-full p-1 shadow">
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category" className="text-sm font-medium">
-              Select Category
-            </Label>
+            <Label htmlFor="category">Select Category</Label>
             <Select
               name="category"
               value={input.category || ""}
