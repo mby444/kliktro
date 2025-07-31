@@ -8,4 +8,5 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::post("/products/{id}", [ProductController::class, "update"]);
 Route::apiResource('/products', ProductController::class);

@@ -74,7 +74,7 @@ export default function ProductForm({
         </CardDescription>
       </CardHeader>
 
-      <form action={action} encType="multipart/form-data">
+      <form action={action}>
         <CardContent className="space-y-6">
           {!!message && (
             <div className="text-sm text-red-600 bg-red-100 border border-red-300 px-3 py-2 rounded">

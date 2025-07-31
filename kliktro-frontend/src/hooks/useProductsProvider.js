@@ -75,9 +75,16 @@ const useProductsProvider = () => {
   const updateProduct = async (product) => {
     try {
       setIsLoaded(false);
-      console.log("product", product);
 
-      const { data, status } = await API.put(
+      const formData = new FormData();
+      // Append request method
+      formData.append("_method", "PUT");
+      // Append product
+      Object.keys(product).forEach((key) => {
+        formData.append(key, product[key]);
+      });
+
+      const { data, status } = await API.post(
         `/products/${product.id}`,
         product,
         {

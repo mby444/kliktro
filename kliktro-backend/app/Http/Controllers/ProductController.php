@@ -55,9 +55,9 @@ class ProductController extends Controller
         $path       = $image->storeAs('images/products', $fileName, "public");
 
         $product = Product::findOrFail($id);
-        $oldRelativePath = str_replace(asset("storage"), "public/", $product->image_url);
+        $oldRelativePath = str_replace(asset("storage") . "/", "", $product->image_url);
 
-        Storage::delete($oldRelativePath);
+        Storage::disk("public")->delete($oldRelativePath);
         $product->update([
             "name"=> $request->input("name"),
             "description"=> $request->input("description"),
@@ -77,7 +77,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $relativePath = str_replace(asset('storage') . '/', '', $product->image_url);
-        // Storage::delete($relativePath);
         Storage::disk('public')->delete($relativePath);
         $deleted = Product::destroy($id);
 
