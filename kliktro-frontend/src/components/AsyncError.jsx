@@ -1,5 +1,7 @@
-// AsyncError.jsx
+// UI Components
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+// Icons
 import { AlertTriangleIcon } from "lucide-react";
 
 export default function AsyncError({ message = "Something went wrong." }) {

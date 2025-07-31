@@ -51,12 +51,10 @@ export const validator = {
   validImage: (d) => {
     if (!d.image.size) throw new Error("Product image is required.");
 
-    // MIME type validation
     if (!d.image.type.startsWith("image/")) {
       throw new Error("File must be an image.");
     }
 
-    // Max size: 2 MB
     if (d.image.size > 2 * 1024 * 1024) {
       throw new Error("File is too large, maximum size is 2 MB.");
     }

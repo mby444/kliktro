@@ -1,6 +1,13 @@
+// UI Components
 import { Button } from "@/components/ui/button";
+
+// Icons
 import { ArrowRight } from "lucide-react";
+
+// Routing
 import { Link } from "react-router";
+
+// Assets
 import banner from "@/assets/banner/main_banner.png";
 
 export default function Banner() {
@@ -8,7 +15,6 @@ export default function Banner() {
     <section className="relative w-full h-[70vh]">
       {/* Background Image */}
       <img
-        // src="https://picsum.photos/1920/1080?grayscale"
         src={banner}
         alt="Banner Background"
         className="absolute inset-0 w-full h-full object-cover"
@@ -22,9 +28,11 @@ export default function Banner() {
         <h2 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">
           Upgrade Your Tech
         </h2>
+
         <p className="text-lg md:text-xl mb-6 max-w-2xl drop-shadow">
           Find the latest gadgets and best deals, all in one place.
         </p>
+
         <Button asChild size="lg" className="gap-2 text-base font-semibold">
           <Link to="/products">
             Browse Products <ArrowRight size={18} />

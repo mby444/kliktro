@@ -1,12 +1,8 @@
 import { useState, useEffect, useActionState } from "react";
-import { useNavigate, useParams } from "react-router";
-import API from "../api";
-import { validator, fixer } from "../utils/productForm";
+import API from "@/api";
+import { validator, fixer } from "@/utils/productForm";
 
-// This custom hook used by /src/providers/AsyncProductsProvider.jsx
 const useProductsProvider = () => {
-  const params = useParams();
-  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -77,9 +73,8 @@ const useProductsProvider = () => {
       setIsLoaded(false);
 
       const formData = new FormData();
-      // Append request method
+
       formData.append("_method", "PUT");
-      // Append product
       Object.keys(product).forEach((key) => {
         formData.append(key, product[key]);
       });
@@ -241,7 +236,6 @@ const useProductsProvider = () => {
     dispatchAdd,
     dispatchEdit,
     removeProduct,
-    // actionState: { messageAdd, messageEdit, dispatchAdd, dispatchEdit },
   };
 };
 

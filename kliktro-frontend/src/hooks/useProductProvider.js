@@ -1,8 +1,7 @@
-import { useState, useEffect, useActionState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import API from "../api";
+import API from "@/api";
 
-// This custom hook used by /src/providers/AsyncProductProvider.jsx
 const useProductProvider = () => {
   const [data, setData] = useState(null);
   const [isError, setIsError] = useState(false);

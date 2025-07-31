@@ -1,5 +1,5 @@
-import useProducts from "../hooks/useProducts";
-import ProductForm from "../components/ProductForm";
+import useProducts from "@/hooks/useProducts";
+import ProductForm from "@/components/ProductForm";
 
 export default function AddProduct() {
   const { stateAdd, dispatchAdd } = useProducts();

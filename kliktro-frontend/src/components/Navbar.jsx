@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -12,11 +11,9 @@ import {
   Shield,
   LogIn,
   LogOut,
-  Search,
   ShoppingCart,
   Menu as MenuIcon,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import useAuth from "@/hooks/useAuth";
 import Searchbar from "./Searchbar";
 

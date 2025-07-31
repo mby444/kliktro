@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { saveData, restoreData } from "../utils/localStorage";
+import { saveData, restoreData } from "@/utils/localStorage";
 
-// This custom hook used by /src/providers/CartProvider.jsx
 const useCartProvider = () => {
   const [items, setItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -41,7 +40,6 @@ const useCartProvider = () => {
     const updatedIndex = items.findIndex((item) => item.id === updatedItem.id);
 
     if (updatedIndex === -1) {
-      console.log("Can't update item, it's not found.");
       return;
     }
 

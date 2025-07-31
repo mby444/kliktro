@@ -1,9 +1,8 @@
 import { useState, useEffect, useActionState } from "react";
 import { useNavigate } from "react-router";
-import { saveData, restoreData, removeData } from "../utils/localStorage";
-import users from "../dummies/users.json";
+import { saveData, restoreData, removeData } from "@/utils/localStorage";
+import users from "@/dummies/users.json";
 
-// This custom hook used by /src/providers/AuthProvider.jsx
 const useAuthProvider = () => {
   const [user, setUser] = useState(null);
   const [loaded, setLoaded] = useState(false);

@@ -3,7 +3,6 @@ import ProductCRUDRow from "./ProductCRUDRow";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableHead,
   TableHeader,
   TableRow,

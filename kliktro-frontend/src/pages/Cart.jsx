@@ -1,8 +1,15 @@
-import useCart from "../hooks/useCart";
-import CartItemCard from "../components/CartItemCard";
-import Breadcrumb from "@/components/Breadcrumb";
+// Hooks
+import useCart from "@/hooks/useCart";
+
+// Components
+import CartItemCard from "@/components/CartItemCard";
 import EmptyCart from "@/components/EmptyCart";
+import Breadcrumb from "@/components/Breadcrumb";
+
+// UI Components
 import { Card, CardContent } from "@/components/ui/card";
+
+// Utils
 import { formatRupiah } from "@/utils/stringFormatter";
 
 export default function Cart() {
@@ -11,7 +18,9 @@ export default function Cart() {
   return (
     <div className="max-w-4xl mx-auto p-4 space-y-6">
       <Breadcrumb />
+
       <h2 className="text-2xl font-bold mb-4">Your Shopping Cart</h2>
+
       {cart.isEmpty() ? (
         <EmptyCart />
       ) : (
@@ -26,6 +35,7 @@ export default function Cart() {
               />
             ))}
           </div>
+
           <Card className="mt-6 p-4">
             <CardContent className="text-right text-xl font-semibold">
               Total:{" "}

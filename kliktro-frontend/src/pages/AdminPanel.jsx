@@ -1,11 +1,18 @@
+// External Libraries
 import { Link } from "react-router";
-import useProducts from "../hooks/useProducts";
-import AsyncError from "../components/AsyncError";
-import ProductCRUDTable from "../components/ProductCRUDTable";
+
+// Hooks
+import useProducts from "@/hooks/useProducts";
+
+// Components
+import AsyncError from "@/components/AsyncError";
+import Breadcrumb from "@/components/Breadcrumb";
+import ProductCRUDTable from "@/components/ProductCRUDTable";
+import ProductCRUDTableSkeleton from "@/components/ProductCRUDTableSkeleton";
+
+// UI Components
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import ProductCRUDTableSkeleton from "@/components/ProductCRUDTableSkeleton";
-import Breadcrumb from "@/components/Breadcrumb";
 
 export default function AdminPanel() {
   const response = useProducts();
@@ -17,12 +24,14 @@ export default function AdminPanel() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-8 space-y-6">
       <Breadcrumb />
+
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-semibold">Product Management</h1>
         <Button asChild>
           <Link to="/admin/add">Add Product</Link>
         </Button>
       </div>
+
       <Card>
         <CardHeader>
           <CardTitle className="text-xl">Product List</CardTitle>

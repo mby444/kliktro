@@ -30,54 +30,30 @@ const router = createBrowserRouter([
               {
                 Component: MainLayout,
                 children: [
+                  { index: true, Component: Home },
+                  { path: "/about", Component: About },
                   {
-                    // Home page
-                    index: true,
-                    Component: Home,
-                  },
-                  {
-                    path: "/about",
-                    Component: About,
-                  },
-                  {
-                    // User login required
                     element: <ProtectedRoute adminOnly={false} />,
                     children: [
-                      {
-                        path: "/products",
-                        Component: Products,
-                      },
+                      { path: "/products", Component: Products },
                       {
                         path: "/products/:id",
                         Component: AsyncProductProvider,
                         children: [{ index: true, Component: ProductDetail }],
                       },
-                      {
-                        path: "/cart",
-                        Component: Cart,
-                      },
+                      { path: "/cart", Component: Cart },
                     ],
                   },
                 ],
               },
             ],
           },
+          { path: "/login", Component: Login },
           {
-            path: "/login",
-            Component: Login,
-          },
-          {
-            // Admin login required
             element: <ProtectedRoute adminOnly={true} />,
             children: [
-              {
-                path: "/admin",
-                Component: AdminPanel,
-              },
-              {
-                path: "/admin/add",
-                Component: AddProduct,
-              },
+              { path: "/admin", Component: AdminPanel },
+              { path: "/admin/add", Component: AddProduct },
               {
                 path: "/admin/edit/:id",
                 Component: AsyncProductProvider,
@@ -89,10 +65,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/*",
-    Component: ErrorNotFound,
-  },
+  { path: "/*", Component: ErrorNotFound },
 ]);
 
 export default router;

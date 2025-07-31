@@ -1,7 +1,7 @@
+import { Link } from "react-router";
 import useProducts from "@/hooks/useProducts";
 import AsyncError from "./AsyncError";
 import BestSellingSkeleton from "./BestSellingSkeleton";
-import { Link } from "react-router";
 
 export default function BestSelling() {
   const response = useProducts();
@@ -10,9 +10,7 @@ export default function BestSelling() {
     return <AsyncError message={response.errorMessage} />;
   }
 
-  const bestSelling = response.isLoaded
-    ? response.data.filter((_, i) => i < 4)
-    : [];
+  const bestSelling = response.isLoaded ? response.data.slice(0, 4) : [];
 
   return (
     <section className="px-4 md:px-8 lg:px-16 py-12">
@@ -21,12 +19,13 @@ export default function BestSelling() {
           Best Selling Products
         </h2>
       </div>
+
       {response.isLoaded ? (
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {bestSelling.map((product) => (
             <Link
-              to={`/products/${product.id}`}
               key={product.id}
+              to={`/products/${product.id}`}
               className="group block rounded-xl border shadow-sm hover:shadow-md transition duration-300 hover:-translate-y-1">
               <div className="overflow-hidden rounded-t-xl p-4">
                 <img

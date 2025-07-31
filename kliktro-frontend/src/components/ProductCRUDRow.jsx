@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import useProducts from "../hooks/useProducts";
+import useProducts from "@/hooks/useProducts";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Button } from "./ui/button";
 import { Pencil, Trash2 } from "lucide-react";

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
+
 import whoWeAre from "@/assets/about/who_we_are.jpg";
 import ourMission from "@/assets/about/our_mission.jpg";
 
@@ -27,7 +28,7 @@ export default function About() {
 
       <Separator />
 
-      {/* Who We Are */}
+      {/* Who We Are Section */}
       <section className="grid md:grid-cols-2 items-center gap-8">
         <div className="space-y-3">
           <div className="flex items-center gap-2 text-gray-800">
@@ -41,18 +42,12 @@ export default function About() {
             best from trusted brands.
           </p>
         </div>
-        <img
-          // src="https://picsum.photos/600/400"
-          src={whoWeAre}
-          alt="Team"
-          className="rounded-xl shadow-md"
-        />
+        <img src={whoWeAre} alt="Team" className="rounded-xl shadow-md" />
       </section>
 
-      {/* Our Mission */}
+      {/* Our Mission Section */}
       <section className="grid md:grid-cols-2 items-center gap-8">
         <img
-          // src="https://picsum.photos/600/400"
           src={ourMission}
           alt="Mission"
           className="rounded-xl shadow-md order-2 md:order-1"
@@ -70,12 +65,13 @@ export default function About() {
         </div>
       </section>
 
-      {/* Why Shop With Us */}
+      {/* Why Shop With Us Section */}
       <section className="space-y-4">
         <div className="flex items-center gap-2 text-gray-800">
           <Info className="w-5 h-5" />
           <h2 className="text-xl font-semibold">Why Shop With Us?</h2>
         </div>
+
         <div className="grid md:grid-cols-3 gap-6">
           {[
             {
@@ -93,8 +89,8 @@ export default function About() {
               desc: "Shop with confidence using our safe and encrypted payment system.",
               icon: <CreditCard className="text-black w-6 h-6" />,
             },
-          ].map((item, i) => (
-            <Card key={i} className="hover:shadow-lg transition-all">
+          ].map((item, index) => (
+            <Card key={index} className="hover:shadow-lg transition-all">
               <CardContent className="p-6 space-y-3">
                 <div className="flex items-center gap-3">
                   {item.icon}

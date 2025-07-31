@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination"; // Tambahkan ini
+import "swiper/css/pagination";
 import { Link } from "react-router";
 import { categoriesWithoutAll } from "@/dummies/categories";
 
@@ -33,6 +33,7 @@ export default function CategorySlider() {
           </svg>
         </div>
 
+        {/* Swiper */}
         <Swiper
           slidesPerView={4}
           spaceBetween={16}

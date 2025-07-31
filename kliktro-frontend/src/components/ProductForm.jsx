@@ -1,5 +1,7 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
+import { categoryNames as categories } from "@/dummies/categories";
 import SubmitButton from "./SubmitButton";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -21,9 +23,8 @@ import {
   CardDescription,
 } from "./ui/card";
 import { X } from "lucide-react";
-import Swal from "sweetalert2";
 
-export default function ProductForm({ state, action = Function() }) {
+export default function ProductForm({ state, action }) {
   const data = state.inputData;
   const [input, setInput] = useState(data);
   const [preview, setPreview] = useState(
@@ -31,33 +32,29 @@ export default function ProductForm({ state, action = Function() }) {
   );
   const fileInputRef = useRef();
 
-  const handleInputChange = (ev) => {
-    const { id: key, value } = ev.target;
-    setInput({ ...input, [key]: value });
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setInput({ ...input, [id]: value });
   };
 
-  const handleFileInputChange = (ev) => {
-    const file = ev.target.files[0];
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
       Swal.fire("Error!", "File must be an image!", "error");
-      ev.target.value = "";
+      e.target.value = "";
       return;
     }
 
     if (file.size > 2 * 1024 * 1024) {
       Swal.fire("Error!", "File is too large, maximum size is 2 MB!", "error");
-      ev.target.value = "";
+      e.target.value = "";
       return;
     }
 
     setInput({ ...input, image: file });
     setPreview(URL.createObjectURL(file));
-  };
-
-  const handleCategoryChange = (value) => {
-    setInput({ ...input, category: value });
   };
 
   const handleRemoveImage = () => {
@@ -68,8 +65,12 @@ export default function ProductForm({ state, action = Function() }) {
     }
   };
 
+  const handleCategoryChange = (value) => {
+    setInput({ ...input, category: value });
+  };
+
   return (
-    <Card className="max-w-3xl mx-auto mt-12 border border-muted shadow-xl bg-white">
+    <Card className="max-w-3xl mx-auto mt-12 bg-white border border-muted shadow-xl">
       <CardHeader className="text-center space-y-1">
         <CardTitle className="text-3xl font-bold tracking-tight">
           {input.id ? "Edit Product" : "Add New Product"}
@@ -142,7 +143,6 @@ export default function ProductForm({ state, action = Function() }) {
             <Label htmlFor="image">
               Product Image {input.id && "(optional)"}
             </Label>
-
             <div className="flex items-start gap-4">
               <Input
                 id="image"
@@ -154,9 +154,8 @@ export default function ProductForm({ state, action = Function() }) {
                 ref={fileInputRef}
                 className="w-full"
               />
-
               {preview && (
-                <div className="relative w-24 h-24 rounded overflow-hidden border">
+                <div className="relative w-24 h-24 border rounded overflow-hidden">
                   <img
                     src={preview}
                     alt="Preview"
@@ -183,18 +182,7 @@ export default function ProductForm({ state, action = Function() }) {
                 <SelectValue placeholder="-- Select Category --" />
               </SelectTrigger>
               <SelectContent>
-                {[
-                  "Audio",
-                  "Television",
-                  "Computers",
-                  "Smartphone",
-                  "Camera",
-                  "Computer Accessories",
-                  "Wearable",
-                  "Tablet",
-                  "Accessories",
-                  "Drone",
-                ].map((cat) => (
+                {categories.map((cat) => (
                   <SelectItem key={cat} value={cat}>
                     {cat}
                   </SelectItem>

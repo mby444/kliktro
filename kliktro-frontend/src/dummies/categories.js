@@ -38,3 +38,16 @@ export const categoriesWithoutAll = [
   { icon: PackageSearch, name: "Accessories" },
   { icon: Plane, name: "Drone" },
 ];
+
+export const categoryNames = [
+  "Audio",
+  "Television",
+  "Computers",
+  "Smartphone",
+  "Camera",
+  "Computer Accessories",
+  "Wearable",
+  "Tablet",
+  "Accessories",
+  "Drone",
+];
