@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { formatRupiah } from "@/utils/stringFormatter";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 export default function CartItemCard({
   item,
@@ -23,8 +24,21 @@ export default function CartItemCard({
     }
   };
 
-  const handleRemoveQty = () => {
-    onRemove(item.id);
+  const handleRemoveQty = async () => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This item will be removed from your cart.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, remove it!",
+      cancelButtonText: "Cancel",
+    });
+
+    if (result.isConfirmed) {
+      onRemove(item.id);
+    }
   };
 
   return (

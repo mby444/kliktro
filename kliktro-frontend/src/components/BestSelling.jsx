@@ -1,6 +1,7 @@
 import useProducts from "@/hooks/useProducts";
 import AsyncError from "./AsyncError";
 import BestSellingSkeleton from "./BestSellingSkeleton";
+import { Link } from "react-router";
 
 export default function BestSelling() {
   const response = useProducts();
@@ -23,14 +24,15 @@ export default function BestSelling() {
       {response.isLoaded ? (
         <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {bestSelling.map((product) => (
-            <div
+            <Link
+              to={`/products/${product.id}`}
               key={product.id}
               className="group block rounded-xl border shadow-sm hover:shadow-md transition duration-300 hover:-translate-y-1">
-              <div className="overflow-hidden rounded-t-xl">
+              <div className="overflow-hidden rounded-t-xl p-4">
                 <img
                   src={product.image_url}
                   alt={product.name}
-                  className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-48 object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
               <div className="p-4">
@@ -38,7 +40,7 @@ export default function BestSelling() {
                   {product.name}
                 </h3>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       ) : (

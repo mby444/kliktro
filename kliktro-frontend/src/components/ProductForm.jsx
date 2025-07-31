@@ -22,12 +22,11 @@ import {
 } from "./ui/card";
 import Swal from "sweetalert2";
 
-export default function ProductForm({
-  data = {},
-  action = Function(),
-  message = "",
-}) {
+export default function ProductForm({ state, action = Function() }) {
+  const data = state.inputData;
   const [input, setInput] = useState(data);
+
+  console.log("data", data);
 
   const handleInputChange = (ev) => {
     const { id: key, value } = ev.target;
@@ -35,11 +34,6 @@ export default function ProductForm({
   };
 
   const handleFileInputChange = (ev) => {
-    console.log("ev.target.files", ev.target.files);
-    // Output:
-    // FileList {0: File, length: 1}0: FilelastModified: 1753869740261lastModifiedDate: Wed Jul 30 2025 17:02:20 GMT+0700 (Indochina Time) {}name: "WhatsApp Image 2025-07-30 at 17.01.54_41172970.jpg"size: 195084type: "image/jpeg"webkitRelativePath: ""[[Prototype]]: Filelength: 1[[Prototype]]: FileList
-
-    // setInput({ ...input, image: ev.target.files[0] });
     const file = ev.target.files[0];
 
     if (!file) return;
@@ -47,12 +41,14 @@ export default function ProductForm({
     // MIME type validation
     if (!file.type.startsWith("image/")) {
       Swal.fire("Error!", "File must be an image!", "error");
+      ev.target.value = "";
       return;
     }
 
     // Max size: 2 MB
     if (file.size > 2 * 1024 * 1024) {
       Swal.fire("Error!", "File is too large, maximum size is 2 MB!", "error");
+      ev.target.value = "";
       return;
     }
 
@@ -76,9 +72,9 @@ export default function ProductForm({
 
       <form action={action}>
         <CardContent className="space-y-6">
-          {!!message && (
+          {!!state.message && (
             <div className="text-sm text-red-600 bg-red-100 border border-red-300 px-3 py-2 rounded">
-              {message}
+              {state.message}
             </div>
           )}
 
@@ -164,7 +160,7 @@ export default function ProductForm({
               type="file"
               accept="image/*"
               onChange={handleFileInputChange}
-              onClick={(ev) => console.log(!!ev.target.files[0])} // outputs true or false
+              //onClick={(ev) => console.log(!!ev.target.files[0])} // outputs true or false
               required={!input.id}
             />
           </div>

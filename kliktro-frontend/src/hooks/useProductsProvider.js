@@ -157,10 +157,21 @@ const useProductsProvider = () => {
     try {
       const validated = validateInput(inputData, { hasId: false });
       await addProduct(validated);
-      navigate("/admin");
+      // navigate("/admin");
+      return {
+        isInitial: false,
+        success: true,
+        inputData,
+        message: "",
+      };
     } catch (error) {
       console.error(error);
-      return error.toString();
+      return {
+        isInitial: false,
+        success: false,
+        inputData,
+        message: error.message,
+      };
     }
   };
 
@@ -180,15 +191,41 @@ const useProductsProvider = () => {
     try {
       const validated = validateInput(inputData, { hasId: true });
       await updateProduct(validated);
-      navigate("/admin");
+      // navigate("/admin");
+      return {
+        isInitial: false,
+        success: true,
+        inputData,
+        message: "",
+      };
     } catch (error) {
       console.error(error);
-      return error.toString();
+      return {
+        isInitial: false,
+        success: false,
+        inputData,
+        message: error.message,
+      };
     }
   };
 
-  const [messageAdd, dispatchAdd] = useActionState(actionAdd, null);
-  const [messageEdit, dispatchEdit] = useActionState(actionEdit, null);
+  const initialInputData = {
+    id: "",
+    name: "",
+    description: "",
+    price: "",
+    stock: "",
+    image: "",
+    category: "",
+  };
+  const initialState = {
+    isInitial: true,
+    success: false,
+    inputData: initialInputData,
+    message: "",
+  };
+  const [stateAdd, dispatchAdd] = useActionState(actionAdd, initialState);
+  const [stateEdit, dispatchEdit] = useActionState(actionEdit, initialState);
 
   useEffect(() => {
     getProducts();
@@ -199,8 +236,12 @@ const useProductsProvider = () => {
     isError,
     errorMessage,
     isLoaded,
-    actionState: { messageAdd, messageEdit, dispatchAdd, dispatchEdit },
+    stateAdd,
+    stateEdit,
+    dispatchAdd,
+    dispatchEdit,
     removeProduct,
+    // actionState: { messageAdd, messageEdit, dispatchAdd, dispatchEdit },
   };
 };
 

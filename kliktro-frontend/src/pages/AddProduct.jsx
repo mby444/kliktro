@@ -2,11 +2,11 @@ import useProducts from "../hooks/useProducts";
 import ProductForm from "../components/ProductForm";
 
 export default function AddProduct() {
-  const { actionState } = useProducts();
-  return (
-    <ProductForm
-      action={actionState.dispatchAdd}
-      message={actionState.messageAdd}
-    />
-  );
+  const { stateAdd, dispatchAdd } = useProducts();
+
+  if (stateAdd.success) {
+    window.location.href = "/admin";
+  }
+
+  return <ProductForm state={stateAdd} action={dispatchAdd} />;
 }

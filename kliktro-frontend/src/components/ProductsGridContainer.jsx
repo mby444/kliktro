@@ -96,7 +96,7 @@ const ProductsGridContainer = ({ data: products }) => {
           {filteredProducts.map((product) => (
             <div
               key={product.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-lg transition overflow-hidden border border-gray-100">
+              className="bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition overflow-hidden border border-gray-100">
               <img
                 src={product.image_url}
                 alt={product.name}

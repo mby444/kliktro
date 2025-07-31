@@ -5,7 +5,7 @@ import AsyncError from "../components/AsyncError";
 import EditFormSkeleton from "@/components/EditFormSkeleton";
 
 export default function EditProduct() {
-  const { actionState } = useProducts();
+  const { stateEdit, dispatchEdit } = useProducts();
   const response = useProduct();
 
   if (!response.isLoaded) {
@@ -18,9 +18,10 @@ export default function EditProduct() {
 
   return (
     <ProductForm
-      data={response.data}
-      action={actionState.dispatchEdit}
-      message={actionState.messageEdit}
+      // data={response.data}
+      // message={stateEdit.message}
+      state={stateEdit}
+      action={dispatchEdit}
     />
   );
 }
