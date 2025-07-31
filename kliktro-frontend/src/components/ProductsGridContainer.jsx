@@ -100,7 +100,7 @@ const ProductsGridContainer = ({ data: products }) => {
               <img
                 src={product.image_url}
                 alt={product.name}
-                className="w-full h-48 object-cover"
+                className="w-full h-48 object-contain"
               />
               <div className="p-4 space-y-2">
                 <h3 className="text-lg font-semibold text-gray-800 line-clamp-1">

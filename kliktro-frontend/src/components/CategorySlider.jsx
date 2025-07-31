@@ -1,77 +1,13 @@
-// components/CategorySlider.tsx
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import {
-  Tv,
-  Headphones,
-  Laptop,
-  Smartphone,
-  Camera,
-  Mouse,
-  Watch,
-  TabletSmartphone,
-  PackageSearch,
-  Plane,
-} from "lucide-react";
+import "swiper/css/pagination"; // Tambahkan ini
 import { Link } from "react-router";
-
-const categories = [
-  {
-    icon: Headphones,
-    name: "Audio",
-    path: "/products?category=audio",
-  },
-  {
-    icon: Tv,
-    name: "Television",
-    path: "/products?category=television",
-  },
-  {
-    icon: Laptop,
-    name: "Computers",
-    path: "/products?category=computers",
-  },
-  {
-    icon: Smartphone,
-    name: "Smartphone",
-    path: "/products?category=smartphone",
-  },
-  {
-    icon: Camera,
-    name: "Camera",
-    path: "/products?category=camera",
-  },
-  {
-    icon: Mouse,
-    name: "Computer Accessories",
-    path: "/products?category=computer+accessories",
-  },
-  {
-    icon: Watch,
-    name: "Wearable",
-    path: "/products?category=wearable",
-  },
-  {
-    icon: TabletSmartphone,
-    name: "Tablet",
-    path: "/products?category=tablet",
-  },
-  {
-    icon: PackageSearch,
-    name: "Accessories",
-    path: "/products?category=accessories",
-  },
-  {
-    icon: Plane,
-    name: "Drone",
-    path: "/products?category=drone",
-  },
-];
+import { categoriesWithoutAll } from "@/dummies/categories";
 
 const formatSearchValue = (searchValue = "") => {
-  return searchValue.split(" ").join("+");
+  return searchValue.toLowerCase().split(" ").join("+");
 };
 
 export default function CategorySlider() {
@@ -100,23 +36,27 @@ export default function CategorySlider() {
         <Swiper
           slidesPerView={4}
           spaceBetween={16}
-          modules={[Navigation]}
+          modules={[Navigation, Pagination]}
           navigation={{
             nextEl: ".swiper-button-next-custom",
             prevEl: ".swiper-button-prev-custom",
           }}
-          className="w-full py-4"
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          className="w-full absolute inset-0 z-0 py-4"
           breakpoints={{
             0: { slidesPerView: 2, spaceBetween: 12 },
             480: { slidesPerView: 3, spaceBetween: 14 },
             768: { slidesPerView: 4, spaceBetween: 16 },
             1024: { slidesPerView: 6, spaceBetween: 16 },
           }}>
-          {categories.map(({ icon: Icon, name, path }, i) => (
+          {categoriesWithoutAll.map(({ icon: Icon, name }, i) => (
             <SwiperSlide key={i}>
               <Link
                 to={`/products?category=${formatSearchValue(name)}`}
-                className="flex flex-col items-center justify-center p-4 border rounded-xl cursor-pointer hover:shadow-lg hover:scale-105 transition-transform">
+                className="flex flex-col items-center justify-center p-4 my-6 md:my-8 border rounded-xl cursor-pointer hover:shadow-lg hover:scale-105 transition-transform">
                 <Icon className="h-8 w-8 mb-2" />
                 <p className="text-sm text-center">{name}</p>
               </Link>
