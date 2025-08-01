@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -20,22 +21,16 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $image     = $request->file('image');
-        $fileName  = Str::uuid() . '.' . $image->getClientOriginalExtension();
-        $directory = public_path('uploads/products');
-
-        if (!file_exists($directory)) {
-            mkdir($directory, 0755, true);
-        }
-
-        $image->move($directory, $fileName);
+        $image    = $request->file('image');
+        $fileName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+        $image->storeAs('uploads/products', $fileName, 'public');
 
         $product = [
             'name'        => $request->input('name'),
             'description' => $request->input('description'),
             'price'       => $request->input('price'),
             'stock'       => $request->input('stock'),
-            'image_url'   => $request->getSchemeAndHttpHost() . "/uploads/products/$fileName",
+            'image_url'   => $request->schemeAndHttpHost() . '/uploads/products/' . $fileName,
             'category'    => $request->input('category'),
         ];
 
@@ -44,8 +39,7 @@ class ProductController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $product = Product::findOrFail($id);
-
+        $product    = Product::findOrFail($id);
         $attributes = [
             'name'        => $request->input('name'),
             'description' => $request->input('description'),
@@ -55,23 +49,14 @@ class ProductController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $image     = $request->file('image');
-            $fileName  = Str::uuid() . '.' . $image->getClientOriginalExtension();
-            $directory = public_path('uploads/products');
+            $image    = $request->file('image');
+            $fileName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('uploads/products', $fileName, 'public');
 
-            if (!file_exists($directory)) {
-                mkdir($directory, 0755, true);
-            }
+            $oldRelativePath = str_replace($request->schemeAndHttpHost() . '/', '', $product->image_url);
+            Storage::disk('public')->delete($oldRelativePath);
 
-            $image->move($directory, $fileName);
-
-            $oldUrl = $product->image_url;
-            $oldPath = public_path(parse_url($oldUrl, PHP_URL_PATH));
-            if (file_exists($oldPath)) {
-                unlink($oldPath);
-            }
-
-            $attributes['image_url'] = $request->getSchemeAndHttpHost() . "/uploads/products/$fileName";
+            $attributes['image_url'] = $request->schemeAndHttpHost() . '/uploads/products/' . $fileName;
         }
 
         $product->update($attributes);
@@ -79,14 +64,11 @@ class ProductController extends Controller
         return $product;
     }
 
-    public function destroy(string $id)
+    public function destroy(Request $request, string $id)
     {
-        $product = Product::findOrFail($id);
-
-        $imagePath = public_path(parse_url($product->image_url, PHP_URL_PATH));
-        if (file_exists($imagePath)) {
-            unlink($imagePath);
-        }
+        $product       = Product::findOrFail($id);
+        $relativePath  = str_replace($request->schemeAndHttpHost() . '/', '', $product->image_url);
+        Storage::disk('public')->delete($relativePath);
 
         $deleted = Product::destroy($id);
 

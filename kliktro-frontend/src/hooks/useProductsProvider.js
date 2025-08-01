@@ -61,6 +61,7 @@ const useProductsProvider = () => {
       setIsError(false);
       setErrorMessage("");
     } catch (error) {
+      console.error(error);
       setIsError(true);
       setErrorMessage(error.toString());
     } finally {
