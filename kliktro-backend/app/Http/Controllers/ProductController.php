@@ -4,54 +4,48 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return Product::all();
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         return Product::findOrFail($id);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $image    = $request->file('image');
-        $fileName = Str::uuid() . '.' . $image->getClientOriginalExtension();
-        $path     = $image->storeAs('images/products', $fileName, 'public');
+        $image     = $request->file('image');
+        $fileName  = Str::uuid() . '.' . $image->getClientOriginalExtension();
+        $directory = public_path('uploads/products');
+
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        $image->move($directory, $fileName);
 
         $product = [
             'name'        => $request->input('name'),
             'description' => $request->input('description'),
             'price'       => $request->input('price'),
             'stock'       => $request->input('stock'),
-            'image_url'   => $request->schemeAndHttpHost() . Storage::url($path),
+            'image_url'   => $request->getSchemeAndHttpHost() . "/uploads/products/$fileName",
             'category'    => $request->input('category'),
         ];
 
         return Product::create($product);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        $product    = Product::findOrFail($id);
+        $product = Product::findOrFail($id);
+
         $attributes = [
             'name'        => $request->input('name'),
             'description' => $request->input('description'),
@@ -61,14 +55,23 @@ class ProductController extends Controller
         ];
 
         if ($request->hasFile('image')) {
-            $image    = $request->file('image');
-            $fileName = Str::uuid() . '.' . $image->getClientOriginalExtension();
-            $path     = $image->storeAs('images/products', $fileName, 'public');
+            $image     = $request->file('image');
+            $fileName  = Str::uuid() . '.' . $image->getClientOriginalExtension();
+            $directory = public_path('uploads/products');
 
-            $oldRelativePath = str_replace(asset('storage') . '/', '', $product->image_url);
-            Storage::disk('public')->delete($oldRelativePath);
+            if (!file_exists($directory)) {
+                mkdir($directory, 0755, true);
+            }
 
-            $attributes['image_url'] = $request->schemeAndHttpHost() . Storage::url($path);
+            $image->move($directory, $fileName);
+
+            $oldUrl = $product->image_url;
+            $oldPath = public_path(parse_url($oldUrl, PHP_URL_PATH));
+            if (file_exists($oldPath)) {
+                unlink($oldPath);
+            }
+
+            $attributes['image_url'] = $request->getSchemeAndHttpHost() . "/uploads/products/$fileName";
         }
 
         $product->update($attributes);
@@ -76,14 +79,14 @@ class ProductController extends Controller
         return $product;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $product       = Product::findOrFail($id);
-        $relativePath  = str_replace(asset('storage') . '/', '', $product->image_url);
-        Storage::disk('public')->delete($relativePath);
+        $product = Product::findOrFail($id);
+
+        $imagePath = public_path(parse_url($product->image_url, PHP_URL_PATH));
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
 
         $deleted = Product::destroy($id);
 

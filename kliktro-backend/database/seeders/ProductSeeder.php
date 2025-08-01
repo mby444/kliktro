@@ -284,7 +284,7 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($products as &$product) {
-            $product['image_url'] = 'http://localhost:8000/storage/images/products/' . str_replace(' ', '_', $product['name']) . '.jpg';
+            $product['image_url'] = 'http://localhost:8000/uploads/products/' . str_replace(' ', '_', $product['name']) . '.jpg';
         }
         unset($product);
 
